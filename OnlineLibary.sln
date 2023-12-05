@@ -5,25 +5,29 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation", "1. Presentation", "{00D04B18-13B4-4193-B2F1-149BEE2452F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Web", "OnlineLibary.Web\OnlineLibary.Web.csproj", "{467C8BC1-171E-4FE9-BDDB-402CF5CCAAE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Web", "OnlineLibary.Web\OnlineLibary.Web.csproj", "{467C8BC1-171E-4FE9-BDDB-402CF5CCAAE6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Applications", "2. Applications", "{24C54E27-4735-4BCB-A1E3-807DC0938731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Managers", "OnlineLibary.Managers\OnlineLibary.Managers.csproj", "{F48286D5-28D6-4DDB-BB74-538D8FD8654C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Managers", "OnlineLibary.Managers\OnlineLibary.Managers.csproj", "{F48286D5-28D6-4DDB-BB74-538D8FD8654C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Managers.Contracts", "OnlineLibary.Managers.Contracts\OnlineLibary.Managers.Contracts.csproj", "{8923599D-5B16-4BB2-BB2D-CD569373F51C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Managers.Contracts", "OnlineLibary.Managers.Contracts\OnlineLibary.Managers.Contracts.csproj", "{8923599D-5B16-4BB2-BB2D-CD569373F51C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Services", "3. Services", "{9504C5AD-559F-418E-BFC9-A197B8B8143A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domain", "3. Domain", "{9504C5AD-559F-418E-BFC9-A197B8B8143A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Domain", "OnlineLibary.Domain\OnlineLibary.Domain.csproj", "{1EE0F0FE-9138-4AB2-9297-70962FC21860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Domain", "OnlineLibary.Domain\OnlineLibary.Domain.csproj", "{1EE0F0FE-9138-4AB2-9297-70962FC21860}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Services", "OnlineLibary.Services\OnlineLibary.Services.csproj", "{1C94070E-08FE-477D-ABDF-04DD59D95DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Services", "OnlineLibary.Services\OnlineLibary.Services.csproj", "{1C94070E-08FE-477D-ABDF-04DD59D95DDB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Data Access", "4. Data Access", "{B3622486-7809-437B-AF5F-AB71B1A14190}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Migrations", "OnlineLibary.Migrations\OnlineLibary.Migrations.csproj", "{69A5B3C2-E10B-4B07-8405-FB12DD91826E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Migrations", "OnlineLibary.Migrations\OnlineLibary.Migrations.csproj", "{69A5B3C2-E10B-4B07-8405-FB12DD91826E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.Infrastucture", "OnlineLibary.Infrastucture\OnlineLibary.Infrastucture.csproj", "{3775307C-A011-4B7A-802D-6E85671FB52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Infrastucture", "OnlineLibary.Infrastucture\OnlineLibary.Infrastucture.csproj", "{3775307C-A011-4B7A-802D-6E85671FB52F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. IoC", "5. IoC", "{FD551723-5D2A-4C99-A3C3-A973644E92D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.IoC", "OnlineLibary.IoC\OnlineLibary.IoC.csproj", "{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,10 @@ Global
 		{3775307C-A011-4B7A-802D-6E85671FB52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3775307C-A011-4B7A-802D-6E85671FB52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3775307C-A011-4B7A-802D-6E85671FB52F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +79,7 @@ Global
 		{1C94070E-08FE-477D-ABDF-04DD59D95DDB} = {9504C5AD-559F-418E-BFC9-A197B8B8143A}
 		{69A5B3C2-E10B-4B07-8405-FB12DD91826E} = {B3622486-7809-437B-AF5F-AB71B1A14190}
 		{3775307C-A011-4B7A-802D-6E85671FB52F} = {B3622486-7809-437B-AF5F-AB71B1A14190}
+		{32A917F7-AB78-4420-B0D9-6FBF6CA028F2} = {FD551723-5D2A-4C99-A3C3-A973644E92D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DD9CDE3-9848-4088-A6B2-50154688A1BF}

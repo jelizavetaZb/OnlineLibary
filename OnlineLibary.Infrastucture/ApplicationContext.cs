@@ -1,17 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineLibary.Domain.Entities;
 
 namespace OnlineLibary.Infrastucture
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext()
-        {
-            Database.EnsureCreated();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=OnlineLibary;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
+        public virtual DbSet<TestItem> TestItems { get; set; }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
     }
 }
