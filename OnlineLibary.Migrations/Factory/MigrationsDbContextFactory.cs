@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using OnlineLibary.Infrastucture;
 
 namespace OnlineLibary.Migrations.Factory
 {
@@ -14,10 +13,11 @@ namespace OnlineLibary.Migrations.Factory
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var connectionString = config.GetConnectionString(nameof(ApplicationContext));
+            var connectionString = config.GetConnectionString(nameof(MigrationsDbContext));
             var optionsBuilder = new DbContextOptionsBuilder().UseSqlServer(connectionString);
 
             return new MigrationsDbContext(optionsBuilder.Options);
         }
     }
 }
+

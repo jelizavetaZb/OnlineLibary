@@ -1,7 +1,6 @@
-﻿using Humanizer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using OnlineLibary.Infrastucture;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineLibary.Infrastructure;
+using OnlineLibary.Infrastructure.Extensions;
 
 namespace OnlineLibary.Migrations.Factory
 {
@@ -11,23 +10,16 @@ namespace OnlineLibary.Migrations.Factory
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
-            PluralizeTableNames(modelBuilder);
-        }
+            // Explicitly set the Provider Name in order to switch correct database specifics (sql statements)
+            EntityTypeBuilderExtensions.ProviderName = Database.ProviderName;
+            // Apply all configurations
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserIdentityDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-        /// <summary>
-        /// Pluralizes all table names, except where <c>.ToTable</c> is explicitly set
-        /// </summary>
-        private void PluralizeTableNames(ModelBuilder builder)
-        {
-            foreach (var entityType in builder.Model.GetEntityTypes())
-            {
-                // Ignore if ToTable (TableName annotation) is explicitly set
-                if (entityType.FindAnnotation(RelationalAnnotationNames.TableName) != null) continue;
-
-                var pluralTableName = entityType.DisplayName().Pluralize(false);
-                entityType.SetTableName(pluralTableName);
-            }
+            // Pluralizes all table names
+            modelBuilder.PluralizeTableNames();
+            // Disable cascade delete globally
+            modelBuilder.DisableCascadeDelete();
         }
     }
 }
