@@ -23,11 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Data Access", "4. Data A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Migrations", "OnlineLibary.Migrations\OnlineLibary.Migrations.csproj", "{69A5B3C2-E10B-4B07-8405-FB12DD91826E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Infrastucture", "OnlineLibary.Infrastucture\OnlineLibary.Infrastucture.csproj", "{3775307C-A011-4B7A-802D-6E85671FB52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.Infrastructure", "OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj", "{3775307C-A011-4B7A-802D-6E85671FB52F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. IoC", "5. IoC", "{FD551723-5D2A-4C99-A3C3-A973644E92D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineLibary.IoC", "OnlineLibary.IoC\OnlineLibary.IoC.csproj", "{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineLibary.IoC", "OnlineLibary.IoC\OnlineLibary.IoC.csproj", "{32A917F7-AB78-4420-B0D9-6FBF6CA028F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
