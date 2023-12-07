@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account.Manage
+namespace OnlineLibary.Web.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {

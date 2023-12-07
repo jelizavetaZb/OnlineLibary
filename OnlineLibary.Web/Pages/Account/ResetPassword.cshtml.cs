@@ -10,7 +10,7 @@ using OnlineLibary.Domain.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account
+namespace OnlineLibary.Web.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {

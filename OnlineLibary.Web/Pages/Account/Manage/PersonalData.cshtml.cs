@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Entities.UserEntities;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account.Manage
+namespace OnlineLibary.Web.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {

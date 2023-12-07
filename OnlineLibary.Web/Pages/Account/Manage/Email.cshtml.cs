@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account.Manage
+namespace OnlineLibary.Web.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {

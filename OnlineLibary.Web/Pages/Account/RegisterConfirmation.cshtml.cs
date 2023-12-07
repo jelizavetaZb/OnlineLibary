@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using OnlineLibary.Domain.Entities.UserEntities;
 using System.Text;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account
+namespace OnlineLibary.Web.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Entities.UserEntities;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account
+namespace OnlineLibary.Web.Pages.Account
 {
     public class LogoutModel : PageModel
     {

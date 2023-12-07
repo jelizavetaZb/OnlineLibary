@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineLibary.Web.Areas.Identity.Pages.Account
+namespace OnlineLibary.Web.Pages.Account
 {
     public class LoginModel : PageModel
     {
