@@ -5,35 +5,28 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineLibary.Domain.Entities.UserEntities;
+using OnlineLibary.Managers.Managers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly ILogger<LogoutModel> _logger;
-
-        public LogoutModel(SignInManager<User> signInManager, ILogger<LogoutModel> logger)
+        private readonly AuthManager _authManager;
+        public LogoutModel(AuthManager authManager)
         {
-            _signInManager = signInManager;
-            _logger = logger;
+            _authManager = authManager;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnGet()
         {
-            await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
-            {
-                return LocalRedirect(returnUrl);
-            }
-            else
-            {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
-                return RedirectToPage();
-            }
+            await _authManager.SingOut();
+            return LocalRedirect(SitePages.Index);
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            await _authManager.SingOut();
+            return LocalRedirect(SitePages.Index);
         }
     }
 }

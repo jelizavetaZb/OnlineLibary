@@ -2,7 +2,7 @@
 
   <PropertyGroup>
      <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -24,6 +24,8 @@
   <ItemGroup>
     <ProjectReference Include="..\OnlineLibary.Domain\OnlineLibary.Domain.csproj" />
     <ProjectReference Include="..\OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj" />
+    <ProjectReference Include="..\OnlineLibary.IoC\OnlineLibary.IoC.csproj" />
+    <ProjectReference Include="..\OnlineLibary.Managers\OnlineLibary.Managers.csproj" />
   </ItemGroup>
 
 </Project>
