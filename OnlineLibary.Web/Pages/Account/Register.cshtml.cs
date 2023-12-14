@@ -23,7 +23,7 @@ namespace OnlineLibary.Web.Pages.Account
         public string ReturnUrl { get; set; }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public void OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
         }

@@ -13,6 +13,7 @@
         public const string AccountLogin = @"/Account/Login";
         public const string AccountLogout = @"/Account/Logout";
         public const string AccountRegister = @"/Account/Register";
+        public const string AccountProfile = @"/Account/Profile";
         public const string AccountResetPassword = @"/Account/ResetPassword";
         public const string AccountResetPasswordConfirmation = @"/Account/ResetPasswordConfirmation";
         public const string Error = @"/Error";

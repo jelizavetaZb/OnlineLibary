@@ -29,5 +29,6 @@ namespace OnlineLibary.Managers.Managers
 
         public async Task<bool> HasLoginsAsync(User user)
             => (await GetLoginsAsync(user)).Any();
+
     }
 }

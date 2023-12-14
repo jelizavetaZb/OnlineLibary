@@ -1,4 +1,6 @@
 ﻿@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Managers.Managers
+@inject AuthManager UserManager
 @{
     var isUserLogin = User.Identity.IsAuthenticated;
 }
@@ -10,7 +12,6 @@
     <title>@ViewData["Title"] - OnlineLibary.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/OnlineLibary.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -35,7 +36,7 @@
                             }
                             else
                             {
-                                <a class="text-dark nav-link" asp-area="" asp-page="@SitePages.Privacy">@User.Identity.Name</a>
+                                <a class="text-dark nav-link" asp-area="" asp-page="@SitePages.AccountProfile">@UserManager.GetUserFirstAndLastName()</a>
                                 <a class="btn btn-dark" asp-area="" asp-page="@SitePages.AccountLogout">Logout</a>
                             }
                         }
