@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Infrastructure.Repositories;
+using OnlineLibary.Managers.Models;
 using OnlineLibary.Managers.Models.Identity;
 
 namespace OnlineLibary.Managers.Managers
@@ -74,24 +75,53 @@ namespace OnlineLibary.Managers.Managers
             return Mapper.Map<ProfileEditModel>(user);
         }
 
-        public async Task UpdateUserPhotoAsync(IFormFile file, int userId)
+        public async Task<ResponseResult> UpdateUserProfileAsync(ProfileEditModel model)
         {
-            if (file == null || file.Length > 0 || !file.ContentType.Contains("image"))
+            var result = new ResponseResult();
+            result.UpdatedId = model.Id;
+            if (model == null)
             {
-                return;
+                result.AddError(string.Empty, "Form data are empty");
+                return result;
+            }
+            var user = _userRepository.GetById(model.Id);
+
+            if (user == null)
+            {
+                result.AddError(nameof(model.Id), "User not founded");
+                return result;
+            }
+            if (!model.NewProfileImage.ContentType.Contains("image"))
+            {
+                result.AddError(nameof(model.ProfileImage), "Allowed only images");
+                return result;
+            }
+            if (model.NewProfileImage == null || model.NewProfileImage.Length > 0)
+            {
+                user.ProfileImage = await UpdateUserPhotoAsync(model.NewProfileImage, model.Id);
             }
 
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            _userRepository.Update(user);
+
+            result.IsSuccess = true;
+            return result;
+        }
+
+
+        private async Task<string> UpdateUserPhotoAsync(IFormFile file, int userId)
+        {
             var realPath = _config["System:ProfileImages"];
-            var fileName = new Guid() + file.FileName;
+            var fileName = Guid.NewGuid() + file.FileName;
             var upload = Path.Combine(realPath, fileName);
             using (var fileStream = new FileStream(upload, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
             }
 
-            var user = _userRepository.GetById(userId);
-            user.ProfileImage = Path.Combine(realPath, fileName);
-            _userRepository.Update(user);
+            var virtualPath = _config["System:ProfileImagesSitePath"];
+            return Path.Combine(virtualPath, fileName);
         }
 
         private User GetCurrentUser()
