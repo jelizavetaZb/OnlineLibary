@@ -3,12 +3,16 @@
   <PropertyGroup>
      <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IServices\" />
-    <Folder Include="IRepositories\" />
+    <Compile Remove="IRepositories\**" />
+    <Compile Remove="IServices\**" />
+    <EmbeddedResource Remove="IRepositories\**" />
+    <EmbeddedResource Remove="IServices\**" />
+    <None Remove="IRepositories\**" />
+    <None Remove="IServices\**" />
   </ItemGroup>
 
   <ItemGroup>
