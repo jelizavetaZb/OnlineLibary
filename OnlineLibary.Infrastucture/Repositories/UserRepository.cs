@@ -5,6 +5,7 @@ namespace OnlineLibary.Infrastructure.Repositories
     public class UserRepository
     {
         private readonly ApplicationDbContext _dbContext;
+
         public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -19,6 +20,11 @@ namespace OnlineLibary.Infrastructure.Repositories
         {
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
+        }
+
+        public IQueryable<User> GetAll()
+        {
+            return _dbContext.Users;
         }
     }
 }

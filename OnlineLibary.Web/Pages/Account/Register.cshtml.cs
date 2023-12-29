@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Managers.Managers;
@@ -11,9 +9,9 @@ namespace OnlineLibary.Web.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly AuthManager _authManager;
+        private readonly UserCustomManager _authManager;
 
-        public RegisterModel(AuthManager authManager)
+        public RegisterModel(UserCustomManager authManager)
         {
             _authManager = authManager;
         }

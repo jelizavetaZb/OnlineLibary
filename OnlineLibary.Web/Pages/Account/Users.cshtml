@@ -1,0 +1,36 @@
+﻿@page
+@model OnlineLibary.Web.Pages.Account.UserManagementModel
+@{
+    ViewData["Title"] = "User Management";
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Edit profile</th>
+            <th scope="col">Edit roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Table)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.DateCreated</td>
+                <td>
+                    <a class="btn btn-outline-dark " href="@Url.Page(PagesList.AccountProfile, new { id = item.Id})">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-dark " href="@Url.Page(PagesList.AccountEditRoles, new { id = item.Id})">Edit roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

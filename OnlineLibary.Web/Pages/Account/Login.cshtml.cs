@@ -9,9 +9,9 @@ namespace OnlineLibary.Web.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly AuthManager _authManager;
+        private readonly UserCustomManager _authManager;
 
-        public LoginModel(AuthManager authManager)
+        public LoginModel(UserCustomManager authManager)
         {
             _authManager = authManager;
         }
@@ -31,8 +31,6 @@ namespace OnlineLibary.Web.Pages.Account
             }
 
             returnUrl ??= Url.Content("~/");
-
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ReturnUrl = returnUrl;

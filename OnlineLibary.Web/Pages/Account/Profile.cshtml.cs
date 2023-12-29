@@ -1,34 +1,45 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineLibary.Domain.Enums;
 using OnlineLibary.Managers.Managers;
 using OnlineLibary.Managers.Models.Identity;
+using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
+    [Authorize]
     public class ProfileModel : PageModel
     {
-        private readonly AuthManager _authManager;
+        private readonly UserCustomManager _userManager;
 
-        public ProfileModel(AuthManager authManager)
+        public ProfileModel(UserCustomManager authManager)
         {
-            _authManager = authManager;
+            _userManager = authManager;
         }
 
         [BindProperty]
-        public ProfileEditModel Input {  get; set; }
+        public ProfileEditModel Input { get; set; }
+        public bool IsCurrentUser { get; set; }
 
-        public void OnGet(int? id)
+        public IActionResult OnGet(int? id)
         {
             UpdateInput(id);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             var id = Input.Id;
+
+            if (id != _userManager.GetCurrentUserId() && !User.HasAnyRole(UserRoleType.GlobalAdmin))
+            {
+                return Redirect(PagesList.Error);
+            }
+
             if (ModelState.IsValid)
             {
-                var result = await _authManager.UpdateUserProfileAsync(Input);
+                var result = await _userManager.UpdateUserProfileAsync(Input);
                 id = result.UpdatedId;
                 if (result.Errors.Any())
                 {
@@ -44,7 +55,8 @@ namespace OnlineLibary.Web.Pages.Account
 
         private void UpdateInput(int? id)
         {
-            Input = _authManager.GetUserProfile(id);
+            Input = _userManager.GetProfileEditModel(id);
+            IsCurrentUser = id == _userManager.GetCurrentUserId();
         }
     }
 }
