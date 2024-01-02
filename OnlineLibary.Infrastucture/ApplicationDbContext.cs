@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Domain.Entities.UserEntities;
 
 namespace OnlineLibary.Infrastructure
@@ -12,6 +13,8 @@ namespace OnlineLibary.Infrastructure
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserUserRole> UserUserRoles { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

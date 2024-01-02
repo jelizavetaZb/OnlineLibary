@@ -76,3 +76,11 @@ button.accept-policy {
 .h-350px {
     height: 350px;
 }
+
+.card-text{
+    max-height: 80px;
+}
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+}

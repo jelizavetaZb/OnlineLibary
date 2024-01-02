@@ -1,0 +1,79 @@
+﻿@page
+@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Web.Helpers
+@model OnlineLibary.Web.Pages.Books.Partials.EditBookModel
+@{
+    ViewData["Title"] = (Model.Input.Id.HasValue ? "Edit" : "Add") + " book";
+}
+
+@{
+    if (User.HasAnyRole(UserRoleType.Editor))
+    {
+        <form method="post" id="edit-book" enctype="multipart/form-data">
+            <input asp-for="Input.Id" type="hidden" />
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <img class="mb-3 h-350px" src="@(string.IsNullOrEmpty(Model.Input.CoverUrl) ? Url.Content("/img/default-cover.jpg")
+                : Url.Content(Model.Input.CoverUrl))" />
+                    <div>
+                        <input type="file" asp-for="Input.NewCover" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Title" class="form-control" />
+                        <label asp-for="Input.Title"></label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Author" class="form-control" />
+                        <label asp-for="Input.Author"></label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Year" class="form-control" />
+                        <label asp-for="Input.Year"></label>
+                    </div>
+                    <a src="#" class="btn btn-dark"> Add new chapter
+                    </a>
+                </div>
+            </div>
+            <div class="form-floating my-3">
+                <textarea asp-for="Input.Description" type="text" rows="5" placeholder=" Description..." class="form-control"></textarea>
+                <label asp-for="Input.Description"></label>
+            </div>
+            <button type="submit" class="btn btn-dark my-3">Save Changes</button>
+        </form>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <img class="mb-3 h-350px" src="@(string.IsNullOrEmpty(Model.Input.CoverUrl) ? Url.Content("/img/default-cover.jpg")
+                : Url.Content(Model.Input.CoverUrl))" />
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="h2">
+                    @Model.Input.Title
+                </div>
+                <div class="h4">
+                    @Model.Input.Author (@Model.Input.Year)
+                </div>
+                <div class="my-2">
+                    @Model.Input.Description
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Chapters)
+            {
+                <li class="list-group-item">
+                    <div>
+                        <a href="#" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
