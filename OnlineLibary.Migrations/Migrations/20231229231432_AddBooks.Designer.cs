@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLibary.Migrations.Factory;
 
@@ -11,9 +12,10 @@ using OnlineLibary.Migrations.Factory;
 namespace OnlineLibary.Migrations.Migrations
 {
     [DbContext(typeof(MigrationsDbContext))]
-    partial class MigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231229231432_AddBooks")]
+    partial class AddBooks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,26 +96,6 @@ namespace OnlineLibary.Migrations.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("Chapters");
-                });
-
-            modelBuilder.Entity("OnlineLibary.Domain.Entities.UserBook", b =>
-                {
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChapterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookId", "UserId");
-
-                    b.HasIndex("ChapterId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserBooks");
                 });
 
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.User", b =>
@@ -344,33 +326,6 @@ namespace OnlineLibary.Migrations.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("OnlineLibary.Domain.Entities.UserBook", b =>
-                {
-                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Book", "Book")
-                        .WithMany("Records")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Chapter", "Chapter")
-                        .WithMany("Records")
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", "User")
-                        .WithMany("Records")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Chapter");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.UserLogin", b =>
                 {
                     b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", null)
@@ -411,19 +366,10 @@ namespace OnlineLibary.Migrations.Migrations
             modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Book", b =>
                 {
                     b.Navigation("Chapters");
-
-                    b.Navigation("Records");
-                });
-
-            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Chapter", b =>
-                {
-                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.User", b =>
                 {
-                    b.Navigation("Records");
-
                     b.Navigation("UserRoles");
                 });
 

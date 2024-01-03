@@ -39,11 +39,11 @@ namespace OnlineLibary.Web.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-                var result = await _authManager.UpdateUserRoleAsync(Input);
+                var result = _authManager.UpdateUserRole(Input);
                 if (result.IsSuccess)
                 {
                     return Redirect(PagesList.AccountUsers);

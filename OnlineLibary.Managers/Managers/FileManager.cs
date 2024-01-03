@@ -16,6 +16,7 @@ namespace OnlineLibary.Managers.Managers
         public async Task<string> UploadFile(IFormFile file, string folderName)
         {
             var path = _config["System:SiteFilesPath"] + folderName + @"\\";
+            Directory.CreateDirectory(path);
             var virtualPath = _config["System:VirtualSiteFilesPath"] + folderName + @"/";
             var fileName = Guid.NewGuid() + file.FileName;
 

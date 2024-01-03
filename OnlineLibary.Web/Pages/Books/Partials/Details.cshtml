@@ -1,0 +1,97 @@
+﻿@page
+@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Web.Helpers
+@model OnlineLibary.Web.Pages.Books.Partials.EditBookModel
+@{
+    var isEditor = User.HasAnyRole(UserRoleType.Editor);
+    ViewData["Title"] = (isEditor ? ((Model.Input.Id.HasValue ? "Edit" : "Add")) : "View") + " book";
+}
+
+@{
+    if (isEditor)
+    {
+        <form method="post" id="edit-book" enctype="multipart/form-data">
+            <input asp-for="Input.Id" type="hidden" />
+            <div class="row">
+                <div class="col-12 col-md-3 text-center">
+                    <img class="mb-3 h-350px img-fluid object-fit-cover rounded mx-auto " src="@(string.IsNullOrEmpty(Model.Input.CoverUrl) ? Url.Content("/img/default-cover.jpg")
+                : Url.Content(Model.Input.CoverUrl))" />
+                    <div>
+                        <input type="file" asp-for="Input.NewCover" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Title" class="form-control" />
+                        <label asp-for="Input.Title"></label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Author" class="form-control" />
+                        <label asp-for="Input.Author"></label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Year" class="form-control" />
+                        <label asp-for="Input.Year"></label>
+                    </div>
+                    <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id})" class="btn btn-dark">
+                        Add new chapter
+                    </a>
+                    @if (Model.Input.CurrentChapterId.HasValue)
+                    {
+                        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id, id = Model.Input.CurrentChapterId})" class="btn btn-warning">
+                            Continue reading
+                        </a>
+                    }
+                    <a class="btn btn-danger" href="@Url.Page(PagesList.BooksList, "Delete", new { id = Model.Input.Id})">Delete</a>
+                </div>
+            </div>
+            <div class="form-floating my-3">
+                <div class="mb-3">
+                    <label class="mb-2" asp-for="Input.Description"></label>
+                    <textarea asp-for="Input.Description" class="form-control" type="text" rows="10"></textarea>
+                    <span asp-validation-for="Input.Description"></span>
+                </div>                
+            </div>
+            <button type="submit" class="btn btn-dark my-3">Save Changes</button>
+        </form>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 col-md-6 text-center">
+                <img class="mb-3 h-350px rounded mx-auto " src="@(string.IsNullOrEmpty(Model.Input.CoverUrl) ? Url.Content("/img/default-cover.jpg")
+                : Url.Content(Model.Input.CoverUrl))" />
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="h2">
+                    @Model.Input.Title
+                </div>
+                <div class="h4">
+                    @Model.Input.Author (@Model.Input.Year)
+                </div>
+                @if (Model.Input.CurrentChapterId.HasValue)
+                {
+                    <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id, id = Model.Input.CurrentChapterId})" class="btn btn-warning">
+                        Continue reading
+                    </a>
+                }
+                <div class="my-2">
+                    @Model.Input.Description
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Chapters)
+            {
+                <li class="list-group-item">
+                    <div>
+                        <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Input.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}

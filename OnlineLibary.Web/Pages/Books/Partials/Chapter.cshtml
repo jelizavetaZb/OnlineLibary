@@ -1,0 +1,83 @@
+﻿@page
+@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Managers.Enums
+@using OnlineLibary.Web.Helpers
+@model OnlineLibary.Web.Pages.Books.Partials.ChapterModel
+@{
+    var isEditor = User.HasAnyRole(UserRoleType.Editor);
+    ViewData["Title"] = (isEditor ? ((Model.Input.Id.HasValue ? "Edit" : "Add")) : "View") + " chapter";
+}
+
+@{
+    if (isEditor)
+    {
+        <form method="post" id="edit-book" enctype="multipart/form-data">
+            <input asp-for="Input.Id" type="hidden" />
+            <input asp-for="Input.BookId" type="hidden" />
+            <div class="row">
+                <div class="col-12 col-md-6 text-center">
+                    @if (!string.IsNullOrEmpty(Model.Input.ImageUrl))
+                    {
+                        <img class="mb-3 h-350px img-fluid object-fit-cover rounded mx-auto " src="@Url.Content(Model.Input.ImageUrl)" />
+                    }
+                    <div>
+                        <input type="file" asp-for="Input.NewImage" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Title" class="form-control" />
+                        <label asp-for="Input.Title"></label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input asp-for="Input.Number" class="form-control" />
+                        <label asp-for="Input.Number"></label>
+                    </div>
+                    <a href="@Url.Page(PagesList.BooksDetails, new { id = Model.Input.BookId })" class="btn btn-primary">View book</a>
+                    <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.BookId})" class="btn btn-dark">
+                        Add new chapter
+                    </a>
+                    <a class="btn btn-danger" href="@Url.Page(PagesList.BooksChapter, "Delete", new { bookId = Model.Input.BookId, id =  Model.Input.Id})">Delete</a>
+                </div>
+            </div>
+            <div class="form-floating my-3">
+                <div class="mb-3">
+                    <label class="mb-2" asp-for="Input.Content"></label>
+                    <textarea asp-for="Input.Content" class="form-control" type="text" rows="50"></textarea>
+                    <span asp-validation-for="Input.Content"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark my-3">Save Changes</button>
+        </form>
+    }
+    else
+    {
+        <div>
+            <div class="h2">
+                Chapter @Model.Input.Number@(string.IsNullOrEmpty(Model.Input.Title) ? "" : ": " + Model.Input.Title)
+            </div>
+            <div class="text-center">
+                @if (!string.IsNullOrEmpty(Model.Input.ImageUrl))
+                {
+                    <img class="mb-3 img-fluid object-fit-cover" src="@Url.Content(Model.Input.ImageUrl)" />
+                }
+            </div>
+           
+            <div class="my-2">
+                @Html.Raw(Model.Input.Content)
+            </div>
+        </div>
+    }
+
+    <div class="d-flex justify-content-evenly">
+        @if (Model.Input.PreviousId.HasValue)
+        {
+            <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.BookId, id = Model.Input.PreviousId})" class="btn btn-outline-dark"> @("< ") Previous</a>
+        }
+        @if (Model.Input.NextId.HasValue)
+        {
+            <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.BookId, id = Model.Input.NextId})" class="btn btn-outline-dark">Next @(" >")</a>
+        }
+    </div>
+
+}

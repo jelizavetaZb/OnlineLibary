@@ -128,7 +128,8 @@ namespace OnlineLibary.Managers.Managers
             result.IsSuccess = true;
             return result;
         }
-        public async Task<ResponseResult> UpdateUserRoleAsync(UserRoleEditModel model)
+
+        public ResponseResult UpdateUserRole(UserRoleEditModel model)
         {
             var result = new ResponseResult
             {

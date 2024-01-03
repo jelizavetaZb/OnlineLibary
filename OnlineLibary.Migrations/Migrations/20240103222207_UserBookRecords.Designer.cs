@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLibary.Migrations.Factory;
 
@@ -11,9 +12,10 @@ using OnlineLibary.Migrations.Factory;
 namespace OnlineLibary.Migrations.Migrations
 {
     [DbContext(typeof(MigrationsDbContext))]
-    partial class MigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240103222207_UserBookRecords")]
+    partial class UserBookRecords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,8 +348,8 @@ namespace OnlineLibary.Migrations.Migrations
 
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserBook", b =>
                 {
-                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Book", "Book")
-                        .WithMany("Records")
+                    b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", "User")
+                        .WithMany("Books")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -358,8 +360,8 @@ namespace OnlineLibary.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", "User")
-                        .WithMany("Records")
+                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Book", "Book")
+                        .WithMany("Users")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -412,7 +414,7 @@ namespace OnlineLibary.Migrations.Migrations
                 {
                     b.Navigation("Chapters");
 
-                    b.Navigation("Records");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Chapter", b =>
@@ -422,7 +424,7 @@ namespace OnlineLibary.Migrations.Migrations
 
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.User", b =>
                 {
-                    b.Navigation("Records");
+                    b.Navigation("Books");
 
                     b.Navigation("UserRoles");
                 });

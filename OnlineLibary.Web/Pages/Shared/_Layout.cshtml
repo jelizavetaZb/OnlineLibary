@@ -25,8 +25,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                     <div class="d-flex flex-column flex-md-row">
-                        <a class="text-dark nav-link my-2" asp-area="" asp-page="@PagesList.Index">Home</a>
-                        <a class="text-dark nav-link my-2" asp-area="" asp-page="@PagesList.Privacy">Privacy</a>
+                        <a class="text-dark nav-link my-2" asp-area="" asp-page="@PagesList.BooksList">Books</a>
                         @if (User.HasAnyRole(UserRoleType.GlobalAdmin))
                         {
                             <a class="text-dark nav-link my-2" asp-area="" asp-page="@PagesList.AccountUsers">User Management</a>
