@@ -1,4 +1,6 @@
-﻿namespace OnlineLibary.Domain.Entities.BookEntities
+﻿using OnlineLibary.Domain.Entities.UserEntities;
+
+namespace OnlineLibary.Domain.Entities.BookEntities
 {
     public class Book
     {
@@ -11,5 +13,6 @@
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
         public virtual ICollection<Chapter> Chapters { get; set; }
+        public virtual ICollection<UserBook> Records { get; set; }
     }
 }

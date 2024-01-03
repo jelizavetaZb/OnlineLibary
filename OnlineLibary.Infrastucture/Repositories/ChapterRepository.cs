@@ -27,6 +27,12 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext.SaveChanges();
         }
 
+        public void Delete(Chapter entity)
+        {
+            _dbContext.Chapters.Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
         public void AddRange(IEnumerable<Chapter> enities)
         {
             _dbContext.Chapters.AddRange(enities);
@@ -43,5 +49,13 @@ namespace OnlineLibary.Infrastructure.Repositories
         {
             return _dbContext.Chapters;
         }
+
+        public int Insert(Chapter entity)
+        {
+            _dbContext.Chapters.Add(entity);
+            _dbContext.SaveChanges();
+            return entity.Id;
+        }
+
     }
 }

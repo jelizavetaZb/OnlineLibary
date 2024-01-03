@@ -9,7 +9,7 @@
         public string ImageUrl { get; set; }
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
-
+        public virtual ICollection<UserBook> Records { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
     }

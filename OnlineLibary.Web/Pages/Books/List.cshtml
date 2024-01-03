@@ -26,7 +26,7 @@
                     <a href="@Url.Page(PagesList.BooksDetails, new { id = item.Id})" class="btn btn-primary">View more</a>
                     @if (User.HasAnyRole(UserRoleType.Editor))
                     {
-                        <a class="btn btn-danger" href="@Url.Page(PagesList.BooksDetails)">Delete</a>
+                        <a class="btn btn-danger" href="@Url.Page(PagesList.BooksList, "Delete", new { id = item.Id})">Delete</a>
                     }
                 </div>
             </div>

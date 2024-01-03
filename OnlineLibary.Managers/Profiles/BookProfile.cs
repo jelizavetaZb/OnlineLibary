@@ -12,6 +12,7 @@ namespace OnlineLibary.Managers.Profiles
                 .ForMember(dest => dest.ChapterCount, opt => opt.MapFrom(scr => scr.Chapters == null ? 0 : scr.Chapters.Count()));
             CreateMap<Book, BookEditInputModel>();
             CreateMap<Chapter, ChapterTableModel>();
+            CreateMap<Chapter, ChapterEditInputModel>();
         }
     }
 }

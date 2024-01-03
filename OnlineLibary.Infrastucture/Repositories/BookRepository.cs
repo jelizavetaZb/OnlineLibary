@@ -34,6 +34,12 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext.SaveChanges();
         }
 
+        public void Delete(Book entity)
+        {
+            _dbContext.Books.Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
         public IQueryable<Book> GetAll()
         {
             return _dbContext.Books;
