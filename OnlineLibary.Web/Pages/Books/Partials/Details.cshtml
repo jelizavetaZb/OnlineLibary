@@ -36,7 +36,7 @@
                     <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id})" class="btn btn-dark">
                         Add new chapter
                     </a>
-                    @if (Model.Input.CurrentChapterId.HasValue)
+                    @if (Model.Input.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Reader))
                     {
                         <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id, id = Model.Input.CurrentChapterId})" class="btn btn-warning">
                             Continue reading
@@ -69,7 +69,7 @@
                 <div class="h4">
                     @Model.Input.Author (@Model.Input.Year)
                 </div>
-                @if (Model.Input.CurrentChapterId.HasValue)
+                @if (Model.Input.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Reader))
                 {
                     <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id, id = Model.Input.CurrentChapterId})" class="btn btn-warning">
                         Continue reading
@@ -81,17 +81,19 @@
             </div>
         </div>
     }
-
-    <div class="card">
-        <ul class="list-group list-group-flush">
-            @foreach (var item in Model.Chapters)
-            {
-                <li class="list-group-item">
-                    <div>
-                        <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Input.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
+    @if (isEditor || User.HasAnyRole(UserRoleType.Reader))
+    {
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.Chapters)
+                {
+                    <li class="list-group-item">
+                        <div>
+                            <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Input.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
 }

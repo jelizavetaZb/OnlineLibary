@@ -8,7 +8,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Books
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ListModel : PageModel
     {
         private readonly BookManager _bookManager;

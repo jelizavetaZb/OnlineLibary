@@ -45,7 +45,7 @@ namespace OnlineLibary.Managers.Managers
             _chapterRepository.Delete(chapter);
         }
 
-        public BookEditInputModel GetBookEditInputModel(int? id, int userId)
+        public BookEditInputModel GetBookEditInputModel(int? id, int? userId)
         {
             if (id == null)
             {
@@ -57,7 +57,7 @@ namespace OnlineLibary.Managers.Managers
                 return null;
             }
             var model = Mapper.Map<BookEditInputModel>(enity);
-            model.CurrentChapterId = (_userBookRepository.GetById(userId, id.Value))?.ChapterId;
+            model.CurrentChapterId = userId != null ? (_userBookRepository.GetById(userId.Value, id.Value))?.ChapterId : null;
             return model;
         }
 

@@ -8,7 +8,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Books.Partials
 {
-    [Authorize]
+    [AllowAnonymous]
     public class EditBookModel : PageModel
     {
         private readonly BookManager _bookManager;
@@ -58,7 +58,7 @@ namespace OnlineLibary.Web.Pages.Books.Partials
 
         private void UpdateInput(int? id)
         {
-            var userId = _userManeger.GetCurrentUserId();
+            var userId = User.Identity.IsAuthenticated ? (int?)_userManeger.GetCurrentUserId() : null;
             Input = _bookManager.GetBookEditInputModel(id, userId) ?? new BookEditInputModel();
             Chapters = _bookManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
         }

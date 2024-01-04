@@ -9,7 +9,7 @@
 
 <div class="container my-3">
     @{
-        if (User.HasAnyRole(UserRoleType.GlobalAdmin) || Model.IsCurrentUser)
+        if (User.HasAnyRole(UserRoleType.UserManager) || Model.IsCurrentUser)
         {
             <form method="post" id="edit-profile" enctype="multipart/form-data">
                 <input asp-for="Input.Id" type="hidden" />

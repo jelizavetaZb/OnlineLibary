@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Enums;
@@ -8,7 +7,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
-    [Authorize]
+    [CustomAuthorize(UserRoleType.Reader, UserRoleType.UserManager)]
     public class ProfileModel : PageModel
     {
         private readonly UserCustomManager _userManager;
@@ -32,7 +31,7 @@ namespace OnlineLibary.Web.Pages.Account
         {
             var id = Input.Id;
 
-            if (id != _userManager.GetCurrentUserId() && !User.HasAnyRole(UserRoleType.GlobalAdmin))
+            if (id != _userManager.GetCurrentUserId() && !User.HasAnyRole(UserRoleType.UserManager))
             {
                 return Redirect(PagesList.Error);
             }

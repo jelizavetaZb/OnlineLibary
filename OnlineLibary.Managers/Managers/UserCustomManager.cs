@@ -55,7 +55,7 @@ namespace OnlineLibary.Managers.Managers
             {
                 return result;
             }
-            await _userManager.AddToRoleAsync(user, UserRoleType.User.ToString());
+            await _userManager.AddToRoleAsync(user, UserRoleType.Reader.ToString());
             await _signInManager.SignInAsync(user, isPersistent: false);
 
             _logger.LogInformation("User created");
