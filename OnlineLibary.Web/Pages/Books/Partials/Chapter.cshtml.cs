@@ -31,7 +31,10 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             }
             UpdateInput(bookId, id);
             var userId = _userManager.GetCurrentUserId();
-            _bookManager.UpdateRecord(bookId, id.Value, userId);
+            if (id.HasValue)
+            {
+                _bookManager.UpdateRecord(bookId, id.Value, userId);
+            }
             return Page();
         }
 
