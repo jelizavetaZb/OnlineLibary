@@ -1,0 +1,83 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.Hosting.Lifetime": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "Default": "Data Source=ATWeb01\\SQLEXPRESS;Initial Catalog=IDADemo;User ID=IDADemoAdmUser;Password=0pqkAIHOWAeYjBkv94xtPiWsqFFFTIgX;MultipleActiveResultSets=true;TrustServerCertificate=True;"
+  },
+  "AppSettings": {
+    "Email": {
+      "EmailFrom": "no-reply-demo@uoncloud.com",
+      "NameFrom": "Ida DEMO",
+      "SendQueuedUrl": "https://ida-adm.uoncloud.com/EmailQueue/Send",
+      "SendMultipleQueuedEmailsUrl": "https://ida-adm.uoncloud.com/EmailQueue/SendMultiple"
+    },
+    "SendGrid": {
+      "ApiKey": "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"
+    },
+    "Winget": {
+      "Path": "C:\\Program Files\\WindowsApps\\Microsoft.DesktopAppInstaller_1.21.3482.0_x64__8wekyb3d8bbwe\\winget.exe",
+      "NameHeader": "SearchName",
+      "IdHeader": "SearchId",
+      "VersionHeader": "SearchVersion",
+      "VersionsHeader": "ShowVersion",
+      "NoPackageFound": "NoPackageFound"
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Verbose",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning",
+        "Microsoft.EntityFrameworkCore": "Error"
+      }
+    },
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithProcessId",
+      "WithThreadId",
+      "WithCorrelationId"
+    ],
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "Server=ATWeb01\\SQLEXPRESS;Initial Catalog=IDADemo.Log;User ID=IDADemoAdmLogUser;Password=1LpknSos9thNZ6lHARgvmtblMKsjlEn9;MultipleActiveResultSets=true;TrustServerCertificate=True;",
+          "sinkOptionsSection": {
+            "tableName": "Logs",
+            "autoCreateSqlTable": true
+          },
+          "columnOptionsSection": {
+            "addStandardColumns": [ "LogEvent" ],
+            "removeStandardColumns": [ "MessageTemplate", "Properties" ],
+            "logEvent": {
+              "excludeStandardColumns": true
+            }
+          }
+        }
+      },
+	  {
+        "Name": "Async",
+        "Args": {
+          "Configure": [
+            {
+              "Name": "File",
+              "Args": {
+                "path": "App_Data\\Logs\\log.txt",
+                "rollingInterval": "Day",
+                "rollOnFileSizeLimit": true,
+                "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [CorrelationId:{CorrelationId}] {Message:lj}{NewLine}{Exception}"
+              }
+            }
+          ]
+        }
+      }
+	]
+  }
+}
