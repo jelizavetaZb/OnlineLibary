@@ -10,10 +10,11 @@ using OnlineLibary.Infrastructure.Repositories;
 using OnlineLibary.Managers.Models;
 using OnlineLibary.Managers.Models.Identity;
 using System.Data;
+using System.Security.Claims;
 
 namespace OnlineLibary.Managers.Managers
 {
-    public class UserCustomManager : BaseUserManager
+    public class UserCustomManager
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IdentityUserManager _userManager;
@@ -23,10 +24,14 @@ namespace OnlineLibary.Managers.Managers
         private readonly FileManager _fileManager;
         private readonly RolesRepository _rolesRepository;
         private readonly UserUserRolesRepository _userUserRolesRepository;
+        protected string _ipAddress;
+        protected ClaimsPrincipal _user;
+        protected IMapper _mapper;
+        protected AutoMapper.IConfigurationProvider _mapperConfig;
+
         public UserCustomManager(SignInManager<User> signInManager, IdentityUserManager userManager, ILogger<UserCustomManager> logger,
             IHttpContextAccessor contextAccessor, UserRepository userRepository, IMapper mapper, IConfiguration configuration,
             FileManager fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
-            : base(contextAccessor, mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -36,6 +41,10 @@ namespace OnlineLibary.Managers.Managers
             _fileManager = fileManager;
             _rolesRepository = rolesRepository;
             _userUserRolesRepository = userUserRolesRepository;
+            _mapper = mapper;
+            _ipAddress = contextAccessor.HttpContext!.Connection.RemoteIpAddress!.ToString();
+            _user = contextAccessor.HttpContext!.User;
+            _mapperConfig = mapper.ConfigurationProvider;
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterInputModel model)
@@ -55,7 +64,7 @@ namespace OnlineLibary.Managers.Managers
             {
                 return result;
             }
-            await _userManager.AddToRoleAsync(user, UserRoleType.User.ToString());
+            await _userManager.AddToRoleAsync(user, UserRoleType.Reader.ToString());
             await _signInManager.SignInAsync(user, isPersistent: false);
 
             _logger.LogInformation("User created");
@@ -82,13 +91,13 @@ namespace OnlineLibary.Managers.Managers
         public ProfileEditModel GetProfileEditModel(int? id)
         {
             var user = id != null ? _userRepository.GetById(id.Value) : GetCurrentUser();
-            return Mapper.Map<ProfileEditModel>(user);
+            return _mapper.Map<ProfileEditModel>(user);
         }
 
         public UserRoleEditModel GetUserRoleEditModel(int? id)
         {
             var user = id != null ? _userRepository.GetById(id.Value) : GetCurrentUser();
-            return Mapper.Map<UserRoleEditModel>(user);
+            return _mapper.Map<UserRoleEditModel>(user);
         }
 
         public async Task<ResponseResult> UpdateUserProfileAsync(ProfileEditModel model)
@@ -184,29 +193,29 @@ namespace OnlineLibary.Managers.Managers
         public List<UserTableModel> GetUsersTable()
         {
             var users = _userRepository.GetAll();
-            return users.ProjectTo<UserTableModel>(MapperConfig).ToList();
+            return users.ProjectTo<UserTableModel>(_mapperConfig).ToList();
         }
 
         public int GetCurrentUserId()
         {
-            return int.Parse(_userManager.GetUserId(User));
+            return int.Parse(_userManager.GetUserId(_user));
         }
 
         public IEnumerable<UserRoleModel> GetUserRoles(int userId)
         {
             var query = _userRepository.GetById(userId).UserRoles.Select(x => x.Role).AsQueryable();
-            return query.ProjectTo<UserRoleModel>(MapperConfig);
+            return query.ProjectTo<UserRoleModel>(_mapperConfig);
         }
 
         public IQueryable<UserRoleModel> GetAllRoles()
         {
             var roles = _rolesRepository.GetAll();
-            return roles.ProjectTo<UserRoleModel>(MapperConfig);
+            return roles.ProjectTo<UserRoleModel>(_mapperConfig);
         }
 
         private User GetCurrentUser()
         {
-            var id = int.Parse(_userManager.GetUserId(User));
+            var id = int.Parse(_userManager.GetUserId(_user));
             var user = _userRepository.GetById(id);
             return user;
         }

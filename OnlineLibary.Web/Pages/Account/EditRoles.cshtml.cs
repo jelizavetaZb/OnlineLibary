@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Managers.Managers;
 using OnlineLibary.Managers.Models.Identity;
@@ -8,7 +7,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
-    [CustomAuthorize(UserRoleType.GlobalAdmin)]
+    [CustomAuthorize(UserRoleType.UserManager)]
     public class EditRolesModel : PageModel
     {
         private readonly UserCustomManager _authManager;

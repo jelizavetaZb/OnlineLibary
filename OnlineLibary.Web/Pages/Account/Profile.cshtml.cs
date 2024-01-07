@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Enums;
@@ -8,7 +7,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
-    [Authorize]
+    [CustomAuthorize(UserRoleType.Reader, UserRoleType.UserManager)]
     public class ProfileModel : PageModel
     {
         private readonly UserCustomManager _userManager;
@@ -24,7 +23,7 @@ namespace OnlineLibary.Web.Pages.Account
 
         public IActionResult OnGet(int? id)
         {
-            UpdateInput(id);
+            UpdateInput(id ?? _userManager.GetCurrentUserId());
             return Page();
         }
 
@@ -32,7 +31,7 @@ namespace OnlineLibary.Web.Pages.Account
         {
             var id = Input.Id;
 
-            if (id != _userManager.GetCurrentUserId() && !User.HasAnyRole(UserRoleType.GlobalAdmin))
+            if (id != _userManager.GetCurrentUserId() && !User.HasAnyRole(UserRoleType.UserManager))
             {
                 return Redirect(PagesList.Error);
             }
@@ -53,7 +52,7 @@ namespace OnlineLibary.Web.Pages.Account
             return Page();
         }
 
-        private void UpdateInput(int? id)
+        private void UpdateInput(int id)
         {
             Input = _userManager.GetProfileEditModel(id);
             IsCurrentUser = id == _userManager.GetCurrentUserId();

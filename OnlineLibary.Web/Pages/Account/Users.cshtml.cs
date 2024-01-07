@@ -6,7 +6,7 @@ using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Account
 {
-    [CustomAuthorize(UserRoleType.GlobalAdmin)]
+    [CustomAuthorize(UserRoleType.UserManager)]
     public class UserManagementModel : PageModel
     {
         private readonly UserCustomManager _userManager;

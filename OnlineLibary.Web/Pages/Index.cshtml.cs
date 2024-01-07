@@ -1,14 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace OnlineLibary.Web.Pages
 {
+    [AllowAnonymous]
     public class IndexModel : PageModel
     {
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel()
         {
-            _logger = logger;
         }
 
         public IActionResult OnGet()

@@ -10,7 +10,9 @@
         public const string AccountEditRoles = @"/Account/EditRoles";
         public const string BooksList = @"/Books/List";
         public const string BooksDetails = @"/Books/Partials/Details";
+        public const string BooksEditDetails = @"/Books/Partials/EditDetails";
         public const string BooksChapter = @"/Books/Partials/Chapter";
+        public const string BooksEditChapter = @"/Books/Partials/EditChapter";
         public const string Error = @"/Error";
         public const string Index = @"/Index";
         public const string Privacy = @"/Privacy";

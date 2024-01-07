@@ -5,31 +5,33 @@
 @{
     ViewData["Title"] = "Libary";
 }
-@if (User.HasAnyRole(UserRoleType.Editor))
-{
-    <a class="btn btn-dark" href="@Url.Page(PagesList.BooksDetails)">Add new book</a>
-}
-<div class="row">
-    @foreach (var item in Model.Table)
+<div class="container">
+    @if (User.HasAnyRole(UserRoleType.Editor))
     {
-        <div class="col-12 col-md-4 col-lg-3 my-2">
-            <div class="card ">
-                <img class="card-img-top" src="@(string.IsNullOrEmpty(item.CoverUrl) ? Url.Content("/img/default-cover.jpg") : Url.Content(item.CoverUrl))">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text overflow-hidden">@item.Description</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">@item.Author</li>
-                        <li class="list-group-item">@item.Year</li>
-                        <li class="list-group-item">Chapters: @item.ChapterCount</li>
-                    </ul>
-                    <a href="@Url.Page(PagesList.BooksDetails, new { id = item.Id})" class="btn btn-primary">View more</a>
-                    @if (User.HasAnyRole(UserRoleType.Editor))
-                    {
-                        <a class="btn btn-danger" href="@Url.Page(PagesList.BooksList, "Delete", new { id = item.Id})">Delete</a>
-                    }
+        <a class="btn btn-dark" href="@Url.Page(PagesList.BooksEditDetails)">Add new book</a>
+    }
+    <div class="row">
+        @foreach (var item in Model.Table)
+        {
+            <div class="col-12 col-md-4 col-lg-3 my-2">
+                <div class="card ">
+                    <img class="card-img-top" src="@(string.IsNullOrEmpty(item.CoverUrl) ? Url.Content("/img/default-cover.jpg") : Url.Content(item.CoverUrl))">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text overflow-hidden">@item.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">@item.Author</li>
+                            <li class="list-group-item">@item.Year</li>
+                            <li class="list-group-item">Chapters: @item.ChapterCount</li>
+                        </ul>
+                        <a href="@Url.Page(PagesList.BooksDetails, new { id = item.Id})" class="btn btn-primary">View more</a>
+                        @if (User.HasAnyRole(UserRoleType.Editor))
+                        {
+                            <a class="btn btn-danger" href="@Url.Page(PagesList.BooksList, "Delete", new { id = item.Id})">Delete</a>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
