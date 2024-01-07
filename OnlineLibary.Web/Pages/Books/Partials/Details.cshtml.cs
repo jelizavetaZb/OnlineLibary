@@ -11,13 +11,15 @@ namespace OnlineLibary.Web.Pages.Books.Partials
     [AllowAnonymous]
     public class EditBookModel : PageModel
     {
+        private readonly ChapterManager _chapterManager;
+        private readonly UserCustomManager _userManager;
         private readonly BookManager _bookManager;
-        private readonly UserCustomManager _userManeger;
 
-        public EditBookModel(BookManager bookManager, UserCustomManager userManeger)
+        public EditBookModel(ChapterManager chapterManager, UserCustomManager userManeger, BookManager bookManeger)
         {
-            _bookManager = bookManager;
-            _userManeger = userManeger;
+            _chapterManager = chapterManager;
+            _userManager = userManeger;
+            _bookManager = bookManeger;
         }
 
         [BindProperty]
@@ -26,41 +28,9 @@ namespace OnlineLibary.Web.Pages.Books.Partials
 
         public void OnGet(int? id = null)
         {
-            UpdateInput(id);
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var id = Input.Id;
-            if (!User.HasAnyRole(UserRoleType.Editor))
-            {
-                return Redirect(PagesList.Error);
-            }
-
-            if (ModelState.IsValid)
-            {
-                var result = await _bookManager.InsertOrUpdateBookAsync(Input);
-                if (result.IsSuccess)
-                {
-                    id = result.UpdatedId;
-                }
-                if (result.Errors.Any())
-                {
-                    foreach (var (key, error) in result.Errors)
-                    {
-                        ModelState.AddModelError(key, error);
-                    }
-                }
-            }
-            UpdateInput(id);
-            return Page();
-        }
-
-        private void UpdateInput(int? id)
-        {
-            var userId = User.Identity.IsAuthenticated ? (int?)_userManeger.GetCurrentUserId() : null;
+            var userId = User.Identity.IsAuthenticated ? (int?)_userManager.GetCurrentUserId() : null;
             Input = _bookManager.GetBookEditInputModel(id, userId) ?? new BookEditInputModel();
-            Chapters = _bookManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
+            Chapters = _chapterManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
         }
     }
 }

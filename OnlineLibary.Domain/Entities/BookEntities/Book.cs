@@ -1,6 +1,4 @@
-﻿using OnlineLibary.Domain.Entities.UserEntities;
-
-namespace OnlineLibary.Domain.Entities.BookEntities
+﻿namespace OnlineLibary.Domain.Entities.BookEntities
 {
     public class Book
     {

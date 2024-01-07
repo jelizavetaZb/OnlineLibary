@@ -23,7 +23,7 @@ namespace OnlineLibary.Web.Pages.Account
 
         public IActionResult OnGet(int? id)
         {
-            UpdateInput(id);
+            UpdateInput(id ?? _userManager.GetCurrentUserId());
             return Page();
         }
 
@@ -52,7 +52,7 @@ namespace OnlineLibary.Web.Pages.Account
             return Page();
         }
 
-        private void UpdateInput(int? id)
+        private void UpdateInput(int id)
         {
             Input = _userManager.GetProfileEditModel(id);
             IsCurrentUser = id == _userManager.GetCurrentUserId();

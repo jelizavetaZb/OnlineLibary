@@ -8,7 +8,8 @@ namespace OnlineLibary.Web.Helpers
         public static bool HasAnyRole(this IPrincipal user, params UserRoleType[] roles)
         {
             var allowedRoles = roles.Select(x => x.ToString());
-            return allowedRoles.Any(user.IsInRole);
+            var bla = allowedRoles.Any(user.IsInRole);
+            return bla;
         }
     }
 }

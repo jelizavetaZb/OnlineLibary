@@ -15,6 +15,7 @@ namespace OnlineLibary.Managers.Models
         public string Content { get; set; }
 
         [Required]
+        [Range(0, 10000)]
         public int Number { get; set; }
 
         public string ImageUrl { get; set; }

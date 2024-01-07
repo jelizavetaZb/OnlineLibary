@@ -11,13 +11,15 @@ namespace OnlineLibary.Web.Pages.Books.Partials
     [Authorize]
     public class ChapterModel : PageModel
     {
-        private readonly BookManager _bookManager;
+        private readonly ChapterManager _chapterManager;
         private readonly UserCustomManager _userManager;
+        private readonly RecordManager _recordManager;
 
-        public ChapterModel(BookManager bookManager, UserCustomManager userManager)
+        public ChapterModel(ChapterManager chapterManager, UserCustomManager userManager, RecordManager recordManager)
         {
-            _bookManager = bookManager;
+            _chapterManager = chapterManager;
             _userManager = userManager;
+            _recordManager = recordManager;
         }
 
         [BindProperty]
@@ -33,7 +35,7 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             var userId = _userManager.GetCurrentUserId();
             if (id.HasValue)
             {
-                _bookManager.UpdateRecord(bookId, id.Value, userId);
+                _recordManager.UpdateRecord(bookId, id.Value, userId);
             }
             return Page();
         }
@@ -49,7 +51,7 @@ namespace OnlineLibary.Web.Pages.Books.Partials
 
             if (ModelState.IsValid)
             {
-                var result = await _bookManager.InsertOrUpdateChapterAsync(Input);
+                var result = await _chapterManager.InsertOrUpdateChapterAsync(Input);
                 if (result.IsSuccess)
                 {
                     id = result.UpdatedId;
@@ -65,18 +67,19 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             UpdateInput(bookId, id);
             return Page();
         }
+
         public IActionResult OnGetDelete(int bookId, int id)
         {
             if (User.HasAnyRole(UserRoleType.Editor))
             {
-                _bookManager.DeleteChapter(id);
+                _chapterManager.DeleteChapter(id);
             }
-            return RedirectToAction(PagesList.BooksDetails, new { id = bookId });
+            return RedirectToPage(PagesList.BooksDetails, new { id = bookId });
         }
 
         public void UpdateInput(int bookId, int? id)
         {
-            Input = _bookManager.GetChapterEditInputModel(id) ?? new();
+            Input = _chapterManager.GetChapterEditInputModel(id) ?? new();
             Input.BookId = bookId;
         }
     }
