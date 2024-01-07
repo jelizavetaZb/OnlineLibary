@@ -33,21 +33,10 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext.SaveChanges();
         }
 
-        public void AddRange(IEnumerable<Chapter> enities)
-        {
-            _dbContext.Chapters.AddRange(enities);
-            _dbContext.SaveChanges();
-        }
-
         public void DeleteRange(IEnumerable<Chapter> enities)
         {
             _dbContext.Chapters.RemoveRange(enities);
             _dbContext.SaveChanges();
-        }
-
-        public IQueryable<Chapter> GetAll()
-        {
-            return _dbContext.Chapters;
         }
 
         public int Insert(Chapter entity)

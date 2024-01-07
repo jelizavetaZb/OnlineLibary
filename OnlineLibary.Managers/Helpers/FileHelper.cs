@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using OnlineLibary.Managers.Managers;
 
-namespace OnlineLibary.Managers.Managers
+namespace OnlineLibary.Managers.Helpers
 {
-
-    public class FileManager : BaseManager
+    public class FileHelper : BaseManager
     {
         private readonly IConfiguration _config;
-        public FileManager(IConfiguration config, IMapper mapper) : base(mapper)
+        public FileHelper(IConfiguration config, IMapper mapper) : base(mapper)
         {
             _config = config;
         }
@@ -30,3 +30,4 @@ namespace OnlineLibary.Managers.Managers
         }
     }
 }
+

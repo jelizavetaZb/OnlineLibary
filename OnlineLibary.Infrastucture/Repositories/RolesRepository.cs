@@ -11,17 +11,6 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public UserRole GetById(int id)
-        {
-            return _dbContext.UserRoles.FirstOrDefault(x => x.Id == id);
-        }
-
-        public void Update(UserRole role)
-        {
-            _dbContext.UserRoles.Update(role);
-            _dbContext.SaveChanges();
-        }
-
         public IQueryable<UserRole> GetAll()
         {
             return _dbContext.UserRoles;

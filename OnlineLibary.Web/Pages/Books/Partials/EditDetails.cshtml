@@ -1,7 +1,7 @@
 ﻿@page
 @using OnlineLibary.Domain.Enums
 @using OnlineLibary.Web.Helpers
-@model OnlineLibary.Web.Pages.Books.Partials.EditDetailscshtmlModel
+@model OnlineLibary.Web.Pages.Books.Partials.EditDetailsModel
 @{
     var isEditor = User.HasAnyRole(UserRoleType.Editor);
     ViewData["Title"] = (isEditor ? ((Model.Input.Id.HasValue ? "Edit" : "Add")) : "View") + " book";

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Infrastructure.Repositories;
+using OnlineLibary.Managers.Helpers;
 using OnlineLibary.Managers.Models;
 using OnlineLibary.Managers.Models.Identity;
 using System.Data;
@@ -21,7 +22,7 @@ namespace OnlineLibary.Managers.Managers
         private readonly ILogger<UserCustomManager> _logger;
         private readonly UserRepository _userRepository;
         private readonly IConfiguration _config;
-        private readonly FileManager _fileManager;
+        private readonly FileHelper _fileManager;
         private readonly RolesRepository _rolesRepository;
         private readonly UserUserRolesRepository _userUserRolesRepository;
         protected string _ipAddress;
@@ -31,7 +32,7 @@ namespace OnlineLibary.Managers.Managers
 
         public UserCustomManager(SignInManager<User> signInManager, IdentityUserManager userManager, ILogger<UserCustomManager> logger,
             IHttpContextAccessor contextAccessor, UserRepository userRepository, IMapper mapper, IConfiguration configuration,
-            FileManager fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
+            FileHelper fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;

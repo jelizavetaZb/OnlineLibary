@@ -8,13 +8,13 @@ using OnlineLibary.Web.Helpers;
 namespace OnlineLibary.Web.Pages.Books.Partials
 {
     [CustomAuthorize(UserRoleType.Editor)]
-    public class EditDetailscshtmlModel : PageModel
+    public class EditDetailsModel : PageModel
     {
         private readonly ChapterManager _chapterManager;
         private readonly UserCustomManager _userManager;
         private readonly BookManager _bookManager;
 
-        public EditDetailscshtmlModel(ChapterManager chapterManager, UserCustomManager userManeger, BookManager bookManeger)
+        public EditDetailsModel(ChapterManager chapterManager, UserCustomManager userManeger, BookManager bookManeger)
         {
             _chapterManager = chapterManager;
             _userManager = userManeger;

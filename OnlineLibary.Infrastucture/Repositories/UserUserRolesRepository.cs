@@ -10,16 +10,6 @@ namespace OnlineLibary.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public UserUserRole GetByUserId(int id)
-        {
-            return _dbContext.UserUserRoles.FirstOrDefault(x => x.UserId == id);
-        }
-
-        public void Update(UserUserRole user)
-        {
-            _dbContext.UserUserRoles.Update(user);
-            _dbContext.SaveChanges();
-        }
 
         public void AddRange(IEnumerable<UserUserRole> enities)
         {
@@ -32,11 +22,5 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext.UserUserRoles.RemoveRange(enities);
             _dbContext.SaveChanges();
         }
-
-        public IQueryable<UserUserRole> GetAll()
-        {
-            return _dbContext.UserUserRoles;
-        }
-
     }
 }

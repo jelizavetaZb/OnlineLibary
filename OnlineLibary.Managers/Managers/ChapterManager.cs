@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Extensions.Configuration;
 using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Infrastructure.Repositories;
+using OnlineLibary.Managers.Helpers;
 using OnlineLibary.Managers.Models;
 
 namespace OnlineLibary.Managers.Managers
@@ -11,10 +12,10 @@ namespace OnlineLibary.Managers.Managers
     {
         private readonly IConfiguration _config;
         private readonly UserBookRepository _userBookRepository;
-        private readonly FileManager _fileManager;
+        private readonly FileHelper _fileManager;
         private readonly ChapterRepository _chapterRepository;
 
-        public ChapterManager(IConfiguration config, IMapper mapper, FileManager fileManager,
+        public ChapterManager(IConfiguration config, IMapper mapper, FileHelper fileManager,
             ChapterRepository chapterRepository, UserBookRepository userBookRepository) : base(mapper)
         {
             _config = config;
