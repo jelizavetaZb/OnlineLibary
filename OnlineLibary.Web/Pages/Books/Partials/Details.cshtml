@@ -9,30 +9,30 @@
 
 <div class="row">
     <div class="col-12 col-md-6 text-center">
-        <img class="mb-3 h-350px rounded mx-auto " src="@(string.IsNullOrEmpty(Model.Input.CoverUrl) ? Url.Content("/img/default-cover.jpg")
-                : Url.Content(Model.Input.CoverUrl))" />
+        <img class="mb-3 h-350px rounded mx-auto " src="@(string.IsNullOrEmpty(Model.Display.CoverUrl) ? Url.Content("/img/default-cover.jpg")
+                : Url.Content(Model.Display.CoverUrl))" />
     </div>
     <div class="col-12 col-md-6">
         <div class="h2">
-            @Model.Input.Title
+            @Model.Display.Title
         </div>
         <div class="h4">
-            @Model.Input.Author (@Model.Input.Year)
+            @Model.Display.Author (@Model.Display.Year)
         </div>
-        @if (Model.Input.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Reader))
+        @if (Model.Display.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Reader))
         {
-            <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.Id, id = Model.Input.CurrentChapterId})" class="btn btn-warning">
+            <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Display.Id, id = Model.Display.CurrentChapterId})" class="btn btn-warning">
                 Continue reading
             </a>
         }
-        @if (Model.Input.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Editor))
+        @if (Model.Display.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Editor))
         {
-            <a href="@Url.Page(PagesList.BooksEditDetails, new { id = Model.Input.Id })" class="btn btn-outline-dark">
+            <a href="@Url.Page(PagesList.BooksEditDetails, new { id = Model.Display.Id })" class="btn btn-outline-dark">
                 Edit book details
             </a>
         }
         <div class="my-2">
-            @Model.Input.Description
+            @Model.Display.Description
         </div>
     </div>
 </div>
@@ -43,7 +43,7 @@
         {
             <li class="list-group-item">
                 <div>
-                    <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Input.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
+                    <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Display.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
                 </div>
             </li>
         }

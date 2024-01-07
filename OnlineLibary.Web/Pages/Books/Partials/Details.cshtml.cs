@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineLibary.Domain.Enums;
 using OnlineLibary.Managers.Managers;
 using OnlineLibary.Managers.Models;
-using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Books.Partials
 {
@@ -22,14 +19,13 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             _bookManager = bookManeger;
         }
 
-        [BindProperty]
-        public BookEditInputModel Input { get; set; }
+        public BookEditInputModel Display { get; set; }
         public List<ChapterTableModel> Chapters { get; set; }
 
         public void OnGet(int? id = null)
         {
             var userId = User.Identity.IsAuthenticated ? (int?)_userManager.GetCurrentUserId() : null;
-            Input = _bookManager.GetBookEditInputModel(id, userId) ?? new BookEditInputModel();
+            Display = _bookManager.GetBookEditInputModel(id, userId) ?? new BookEditInputModel();
             Chapters = _chapterManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
         }
     }

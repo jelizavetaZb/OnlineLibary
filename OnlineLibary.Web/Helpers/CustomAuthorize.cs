@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using OnlineLibary.Domain.Enums;
-using System.Net;
 
 namespace OnlineLibary.Web.Helpers
 {
@@ -21,7 +20,7 @@ namespace OnlineLibary.Web.Helpers
             if (!user.Identity.IsAuthenticated)
                 return;
             if (!user.HasAnyRole(_roles))
-                context.Result = new StatusCodeResult((int)HttpStatusCode.Forbidden);
+                context.Result = new RedirectResult(PagesList.Error);
         }
     }
 }

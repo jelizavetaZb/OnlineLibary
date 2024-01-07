@@ -12,16 +12,21 @@ namespace OnlineLibary.Web.Pages.Books
     public class ListModel : PageModel
     {
         private readonly BookManager _bookManager;
-        public List<BookTableModel> Table { get; set; }
+        private readonly UserCustomManager _userManager;
 
-        public ListModel(BookManager bookManager)
+        public ListModel(BookManager bookManager, UserCustomManager userManager)
         {
             _bookManager = bookManager;
+            _userManager = userManager;
         }
+        public List<BookTableModel> Table { get; set; }
 
-        public void OnGet()
+        public void OnGet(bool userBooks = false)
         {
-            Table = _bookManager.GetBookGridModels();
+            var id = (userBooks && User.HasAnyRole(UserRoleType.Reader)) 
+                ? (int?)_userManager.GetCurrentUserId() 
+                : null;
+            Table = _bookManager.GetBookGridModels(id);
         }
 
         public IActionResult OnGetDelete(int id)

@@ -8,7 +8,7 @@
 <div class="container">
     @if (User.HasAnyRole(UserRoleType.Editor))
     {
-        <a class="btn btn-dark" href="@Url.Page(PagesList.BooksDetails)">Add new book</a>
+        <a class="btn btn-dark" href="@Url.Page(PagesList.BooksEditDetails)">Add new book</a>
     }
     <div class="row">
         @foreach (var item in Model.Table)

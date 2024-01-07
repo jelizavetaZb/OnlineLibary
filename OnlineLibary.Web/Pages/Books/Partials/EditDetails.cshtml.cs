@@ -40,6 +40,7 @@ namespace OnlineLibary.Web.Pages.Books.Partials
                 if (result.IsSuccess)
                 {
                     id = result.UpdatedId;
+                    return RedirectToPage(PagesList.BooksDetails, new { id });
                 }
                 if (result.Errors.Any())
                 {

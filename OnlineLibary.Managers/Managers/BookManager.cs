@@ -25,9 +25,15 @@ namespace OnlineLibary.Managers.Managers
             _userBookRepository = userBookRepository;
         }
 
-        public List<BookTableModel> GetBookGridModels()
+        public List<BookTableModel> GetBookGridModels(int? userId)
         {
-            var query = _bookRepository.GetAll().OrderByDescending(x => x.DateUpdated);
+            var query = _bookRepository.GetAll();
+            if (userId.HasValue)
+            {
+                var userBooks = _userBookRepository.GetAll().Where(x => x.UserId == userId).Select(x => x.BookId).AsEnumerable();
+                query = query.Where(x => userBooks.Contains(x.Id));
+            }
+            query.OrderByDescending(x => x.DateUpdated);
             return query.ProjectTo<BookTableModel>(MapperConfig).ToList();
         }
 
@@ -40,7 +46,7 @@ namespace OnlineLibary.Managers.Managers
             _chapterRepository.DeleteRange(chapters);
             _bookRepository.Delete(book);
         }
-       
+
 
         public BookEditInputModel GetBookEditInputModel(int? id, int? userId)
         {
