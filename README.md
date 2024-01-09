@@ -15,3 +15,12 @@ INSERT INTO [dbo].[UserRoles] VALUES (20,'Can manage books','Editor','EDITOR' ,'
 GO
 ```
 4) Update-Database
+5) After register set 1 user User Manager role
+```
+USE [OnlineLibary]
+GO
+
+INSERT INTO [dbo].[UserUserRoles] VALUES (1 ,1)
+GO
+
+```
