@@ -8,13 +8,13 @@ using OnlineLibary.Web.Helpers;
 namespace OnlineLibary.Web.Pages.Books.Partials
 {
     [CustomAuthorize(UserRoleType.Editor)]
-    public class EditDetailscshtmlModel : PageModel
+    public class EditDetailsModel : PageModel
     {
         private readonly ChapterManager _chapterManager;
         private readonly UserCustomManager _userManager;
         private readonly BookManager _bookManager;
 
-        public EditDetailscshtmlModel(ChapterManager chapterManager, UserCustomManager userManeger, BookManager bookManeger)
+        public EditDetailsModel(ChapterManager chapterManager, UserCustomManager userManeger, BookManager bookManeger)
         {
             _chapterManager = chapterManager;
             _userManager = userManeger;
@@ -24,6 +24,8 @@ namespace OnlineLibary.Web.Pages.Books.Partials
         [BindProperty]
         public BookEditInputModel Input { get; set; }
         public List<ChapterTableModel> Chapters { get; set; }
+        public ResponseResult ResponseResult { get; set; }
+        public bool WriteStatusMessage { get; set; }
 
         public void OnGet(int? id = null)
         {
@@ -37,21 +39,16 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             if (ModelState.IsValid)
             {
                 var result = await _bookManager.InsertOrUpdateBookAsync(Input);
+                id = result.UpdatedId;
+                WriteStatusMessage = true;
+                ResponseResult = result;
                 if (result.IsSuccess)
                 {
-                    id = result.UpdatedId;
-                    return RedirectToPage(PagesList.BooksDetails, new { id });
+                    ResponseResult.SuccessText = $"Book successfully updated!";
                 }
-                if (result.Errors.Any())
-                {
-                    foreach (var (key, error) in result.Errors)
-                    {
-                        ModelState.AddModelError(key, error);
-                    }
-                }
-
-                UpdateInput(id);
             }
+
+            UpdateInput(id);
             Chapters = _chapterManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
             return Page();
         }

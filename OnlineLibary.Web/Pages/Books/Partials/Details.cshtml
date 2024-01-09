@@ -25,7 +25,7 @@
                 Continue reading
             </a>
         }
-        @if (Model.Display.CurrentChapterId.HasValue && User.HasAnyRole(UserRoleType.Editor))
+        @if (User.HasAnyRole(UserRoleType.Editor))
         {
             <a href="@Url.Page(PagesList.BooksEditDetails, new { id = Model.Display.Id })" class="btn btn-outline-dark">
                 Edit book details
@@ -37,16 +37,20 @@
     </div>
 </div>
 
-<div class="card">
-    <ul class="list-group list-group-flush">
-        @foreach (var item in Model.Chapters)
-        {
-            <li class="list-group-item">
-                <div>
-                    <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Display.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
+@if(User.HasAnyRole(UserRoleType.Reader))
+{
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Chapters)
+            {
+                <li class="list-group-item">
+                    <div>
+                        <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Display.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
 

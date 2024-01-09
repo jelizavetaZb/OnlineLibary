@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Extensions.Configuration;
 using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Infrastructure.Repositories;
+using OnlineLibary.Managers.Helpers;
 using OnlineLibary.Managers.Models;
 
 namespace OnlineLibary.Managers.Managers
@@ -12,10 +13,10 @@ namespace OnlineLibary.Managers.Managers
         private readonly IConfiguration _config;
         private readonly BookRepository _bookRepository;
         private readonly UserBookRepository _userBookRepository;
-        private readonly FileManager _fileManager;
+        private readonly FileHelper _fileManager;
         private readonly ChapterRepository _chapterRepository;
 
-        public BookManager(IConfiguration config, IMapper mapper, BookRepository bookRepository, FileManager fileManager,
+        public BookManager(IConfiguration config, IMapper mapper, BookRepository bookRepository, FileHelper fileManager,
             ChapterRepository chapterRepository, UserBookRepository userBookRepository) : base(mapper)
         {
             _config = config;
@@ -66,7 +67,11 @@ namespace OnlineLibary.Managers.Managers
 
         public async Task<ResponseResult> InsertOrUpdateBookAsync(BookEditInputModel model)
         {
-            var result = new ResponseResult();
+            var result = new ResponseResult()
+            {
+                UpdatedId = model.Id ?? 0
+            };
+
             if (model == null)
             {
                 result.AddError(string.Empty, "Form data are empty");
@@ -106,7 +111,6 @@ namespace OnlineLibary.Managers.Managers
 
             book.DateUpdated = DateTime.Now;
             _bookRepository.Update(book);
-            result.UpdatedId = book.Id;
             result.IsSuccess = true;
             return result;
         }

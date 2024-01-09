@@ -8,6 +8,10 @@
     ViewData["Title"] = (Model.Input.Id.HasValue ? "Edit" : "Add") + " chapter";
 }
 
+@if (Model.WriteStatusMessage)
+{
+    <partial name="@PagesList.Shared_StatusMessage" model="Model.ResponseResult"></partial>
+}
 
 <form method="post" id="edit-book" enctype="multipart/form-data">
     <input asp-for="Input.Id" type="hidden" />
@@ -34,11 +38,16 @@
                 <label asp-for="Input.Number"></label>
                 <span asp-validation-for="Input.Number" class="text-danger"></span>
             </div>
-            <a href="@Url.Page(PagesList.BooksDetails, new { id = Model.Input.BookId })" class="btn btn-primary">View book</a>
-            <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.BookId})" class="btn btn-dark">
-                Add new chapter
-            </a>
-            <a class="btn btn-danger" href="@Url.Page(PagesList.BooksChapter, "Delete", new { bookId = Model.Input.BookId, id =  Model.Input.Id})">Delete</a>
+            @if (Model.Input.Id.HasValue)
+            {
+                <a href="@Url.Page(PagesList.BooksDetails, new { id = Model.Input.BookId })" class="btn btn-primary">View book</a>
+                <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Input.BookId, id = Model.Input.Id })" class="btn btn-primary">View chapter</a>
+                <a href="@Url.Page(PagesList.BooksEditChapter, new { bookId = Model.Input.BookId})" class="btn btn-dark">
+                    Add new chapter
+                </a>
+                <a class="btn btn-danger" href="@Url.Page(PagesList.BooksChapter, "Delete", new { bookId = Model.Input.BookId, id =  Model.Input.Id})">Delete</a>
+            }
+            <button type="submit" class="btn btn-success my-3">Save Changes</button>
         </div>
     </div>
     <div class="form-floating my-3">
@@ -49,7 +58,7 @@
 
         </div>
     </div>
-    <button type="submit" class="btn btn-dark my-3">Save Changes</button>
+    <button type="submit" class="btn btn-success my-3">Save Changes</button>
 </form>
 
 <div class="d-flex justify-content-evenly">

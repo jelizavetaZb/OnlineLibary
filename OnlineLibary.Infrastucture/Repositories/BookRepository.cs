@@ -22,18 +22,6 @@ namespace OnlineLibary.Infrastructure.Repositories
             _dbContext.SaveChanges();
         }
 
-        public void AddRange(IEnumerable<Book> enities)
-        {
-            _dbContext.Books.AddRange(enities);
-            _dbContext.SaveChanges();
-        }
-
-        public void DeleteRange(IEnumerable<Book> enities)
-        {
-            _dbContext.Books.RemoveRange(enities);
-            _dbContext.SaveChanges();
-        }
-
         public void Delete(Book entity)
         {
             _dbContext.Books.Remove(entity);

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Infrastructure.Repositories;
+using OnlineLibary.Managers.Helpers;
 using OnlineLibary.Managers.Models;
 using OnlineLibary.Managers.Models.Identity;
 using System.Data;
@@ -21,7 +23,7 @@ namespace OnlineLibary.Managers.Managers
         private readonly ILogger<UserCustomManager> _logger;
         private readonly UserRepository _userRepository;
         private readonly IConfiguration _config;
-        private readonly FileManager _fileManager;
+        private readonly FileHelper _fileManager;
         private readonly RolesRepository _rolesRepository;
         private readonly UserUserRolesRepository _userUserRolesRepository;
         protected string _ipAddress;
@@ -31,7 +33,7 @@ namespace OnlineLibary.Managers.Managers
 
         public UserCustomManager(SignInManager<User> signInManager, IdentityUserManager userManager, ILogger<UserCustomManager> logger,
             IHttpContextAccessor contextAccessor, UserRepository userRepository, IMapper mapper, IConfiguration configuration,
-            FileManager fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
+            FileHelper fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -119,14 +121,15 @@ namespace OnlineLibary.Managers.Managers
                 result.AddError(nameof(model.Id), "User not founded");
                 return result;
             }
-            if (!model.NewProfileImage.ContentType.Contains("image"))
+
+            if (model.NewProfileImage != null && model.NewProfileImage.Length > 0)
             {
-                result.AddError(nameof(model.ProfileImage), "Allowed only images");
-                return result;
-            }
-            if (model.NewProfileImage == null || model.NewProfileImage.Length > 0)
-            {
-                var folder = _config["System:ProfileImagesFolder"];
+                if (!model.NewProfileImage.ContentType.Contains("image"))
+                {
+                    result.AddError(nameof(model.NewProfileImage), "Allowed only images");
+                    return result;
+                }
+                var folder = _config["System:CoverImagesFolder"];
                 user.ProfileImage = await _fileManager.UploadFile(model.NewProfileImage, folder);
             }
 

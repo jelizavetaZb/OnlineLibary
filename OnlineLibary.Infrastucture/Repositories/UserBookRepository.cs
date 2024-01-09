@@ -17,18 +17,6 @@ namespace OnlineLibary.Infrastructure.Repositories
             return _dbContext.UserBooks.FirstOrDefault(x => x.UserId == userId && x.BookId == bookId);
         }
 
-        public void Update(UserBook entity)
-        {
-            _dbContext.UserBooks.Update(entity);
-            _dbContext.SaveChanges();
-        }
-
-        public void AddRange(IEnumerable<UserBook> enities)
-        {
-            _dbContext.UserBooks.AddRange(enities);
-            _dbContext.SaveChanges();
-        }
-
         public void DeleteRange(IEnumerable<UserBook> enities)
         {
             _dbContext.UserBooks.RemoveRange(enities);
