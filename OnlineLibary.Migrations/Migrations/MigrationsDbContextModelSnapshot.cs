@@ -22,6 +22,100 @@ namespace OnlineLibary.Migrations.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Chapter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Chapters");
+                });
+
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.UserBook", b =>
+                {
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId", "UserId");
+
+                    b.HasIndex("ChapterId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBooks");
+                });
+
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -49,6 +143,12 @@ namespace OnlineLibary.Migrations.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -71,6 +171,9 @@ namespace OnlineLibary.Migrations.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProfileImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -151,7 +254,6 @@ namespace OnlineLibary.Migrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -231,6 +333,44 @@ namespace OnlineLibary.Migrations.Migrations
                     b.ToTable("UserUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Chapter", b =>
+                {
+                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Book", "Book")
+                        .WithMany("Chapters")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.UserBook", b =>
+                {
+                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Book", "Book")
+                        .WithMany("Records")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OnlineLibary.Domain.Entities.BookEntities.Chapter", "Chapter")
+                        .WithMany("Records")
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", "User")
+                        .WithMany("Records")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Chapter");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.UserLogin", b =>
                 {
                     b.HasOne("OnlineLibary.Domain.Entities.UserEntities.User", null)
@@ -268,8 +408,22 @@ namespace OnlineLibary.Migrations.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Book", b =>
+                {
+                    b.Navigation("Chapters");
+
+                    b.Navigation("Records");
+                });
+
+            modelBuilder.Entity("OnlineLibary.Domain.Entities.BookEntities.Chapter", b =>
+                {
+                    b.Navigation("Records");
+                });
+
             modelBuilder.Entity("OnlineLibary.Domain.Entities.UserEntities.User", b =>
                 {
+                    b.Navigation("Records");
+
                     b.Navigation("UserRoles");
                 });
 

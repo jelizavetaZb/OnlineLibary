@@ -1,0 +1,40 @@
+﻿@page
+@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Managers.Enums
+@using OnlineLibary.Web.Helpers
+@model OnlineLibary.Web.Pages.Books.Partials.ChapterModel
+@{
+    var isEditor = User.HasAnyRole(UserRoleType.Editor);
+    ViewData["Title"] = "View Chapter";
+}
+
+@if (isEditor)
+{
+    <a href="@Url.Page(PagesList.BooksEditChapter, new { bookId = Model.Display.BookId, id = Model.Display.Id})" class="btn btn-dark my-2"> Edit chapter </a>
+}
+
+<div class="h2">
+    Chapter @Model.Display.Number@(string.IsNullOrEmpty(Model.Display.Title) ? "" : ": " + Model.Display.Title)
+</div>
+<div class="text-center">
+    @if (!string.IsNullOrEmpty(Model.Display.ImageUrl))
+    {
+        <img class="mb-3 img-fluid object-fit-cover" src="@Url.Content(Model.Display.ImageUrl)" />
+    }
+</div>
+
+<div class="my-2">
+    @Html.Raw(Model.Display.Content)
+</div>
+
+
+<div class="d-flex justify-content-evenly">
+    @if (Model.Display.PreviousId.HasValue)
+    {
+        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Display.BookId, id = Model.Display.PreviousId})" class="btn btn-outline-dark"> @("< ") Previous</a>
+    }
+    @if (Model.Display.NextId.HasValue)
+    {
+        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Display.BookId, id = Model.Display.NextId})" class="btn btn-outline-dark">Next @(" >")</a>
+    }
+</div>

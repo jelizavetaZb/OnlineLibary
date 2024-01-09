@@ -1,0 +1,41 @@
+﻿@page
+@model EditRolesModel
+@{
+    ViewData["Title"] = "Edit user roles";
+}
+<form method="post" id="edit-user-roles">
+    <input asp-for="Input.Id" type="hidden" />
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img class="mb-3 h-350px rounded mx-auto " src="@(string.IsNullOrEmpty(Model.Input.ProfileImage) ? Url.Content("/img/default-profile.jpg")
+                : Url.Content(Model.Input.ProfileImage))" />
+
+            <div class="form-floating my-2">
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="name" aria-required="true" disabled />
+                <label asp-for="Input.FirstName"></label>
+            </div>
+            <div class="form-floating my-2">
+                <input asp-for="Input.LastName" class="form-control" autocomplete="surname" aria-required="true" disabled />
+                <label asp-for="Input.LastName"></label>
+            </div>
+            <div class="form-floating my-2">
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" disabled />
+                <label asp-for="Input.Email"></label>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 my-4">
+            @for (var i = 0; i < Model.Input.Roles.Count; i++)
+            {
+                <div class="form-check">
+                    <input asp-for="Input.Roles[i].IsSelected" class="form-check-input" type="checkbox" id="@i-checkbox">
+                    <input asp-for="Input.Roles[i].Id" type="hidden">
+                    <label class="form-check-label" for="@i-checkbox">
+                        @Model.Input.Roles[i].Name
+                    </label>
+                </div>
+
+            }
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success my-3">Save Changes</button>
+</form>
