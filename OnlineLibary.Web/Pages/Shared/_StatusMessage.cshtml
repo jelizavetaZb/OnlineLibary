@@ -1,0 +1,25 @@
+﻿@using OnlineLibary.Managers.Models
+@model ResponseResult
+
+@{
+    if (!Model.IsSuccess)
+    {
+        <div class="alert alert-danger">
+            @if (Model.Errors.Any())
+            {
+                foreach (var (key, error) in Model.Errors)
+                {
+                    <div>
+                        <span class="fw-bold">@key</span> @error
+                    </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            @(string.IsNullOrEmpty(Model.SuccessText) ? "Successfully updated" : Model.SuccessText)
+        </div>
+    }
+}

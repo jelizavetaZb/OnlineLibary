@@ -18,5 +18,6 @@
         public const string Privacy = @"/Privacy";
         public const string Shared_Layout = @"Shared/_Layout";
         public const string Shared_ValidationScriptsPartial = @"Shared/_ValidationScriptsPartial";
+        public const string Shared_StatusMessage = @"Shared/_StatusMessage";
     }
 }

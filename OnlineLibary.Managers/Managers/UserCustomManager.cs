@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Infrastructure.Repositories;
@@ -120,14 +121,15 @@ namespace OnlineLibary.Managers.Managers
                 result.AddError(nameof(model.Id), "User not founded");
                 return result;
             }
-            if (!model.NewProfileImage.ContentType.Contains("image"))
+
+            if (model.NewProfileImage != null && model.NewProfileImage.Length > 0)
             {
-                result.AddError(nameof(model.ProfileImage), "Allowed only images");
-                return result;
-            }
-            if (model.NewProfileImage == null || model.NewProfileImage.Length > 0)
-            {
-                var folder = _config["System:ProfileImagesFolder"];
+                if (!model.NewProfileImage.ContentType.Contains("image"))
+                {
+                    result.AddError(nameof(model.NewProfileImage), "Allowed only images");
+                    return result;
+                }
+                var folder = _config["System:CoverImagesFolder"];
                 user.ProfileImage = await _fileManager.UploadFile(model.NewProfileImage, folder);
             }
 

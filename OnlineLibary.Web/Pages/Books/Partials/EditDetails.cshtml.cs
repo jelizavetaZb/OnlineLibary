@@ -24,6 +24,8 @@ namespace OnlineLibary.Web.Pages.Books.Partials
         [BindProperty]
         public BookEditInputModel Input { get; set; }
         public List<ChapterTableModel> Chapters { get; set; }
+        public ResponseResult ResponseResult { get; set; }
+        public bool WriteStatusMessage { get; set; }
 
         public void OnGet(int? id = null)
         {
@@ -37,21 +39,16 @@ namespace OnlineLibary.Web.Pages.Books.Partials
             if (ModelState.IsValid)
             {
                 var result = await _bookManager.InsertOrUpdateBookAsync(Input);
+                id = result.UpdatedId;
+                WriteStatusMessage = true;
+                ResponseResult = result;
                 if (result.IsSuccess)
                 {
-                    id = result.UpdatedId;
-                    return RedirectToPage(PagesList.BooksDetails, new { id });
+                    ResponseResult.SuccessText = $"Book successfully updated!";
                 }
-                if (result.Errors.Any())
-                {
-                    foreach (var (key, error) in result.Errors)
-                    {
-                        ModelState.AddModelError(key, error);
-                    }
-                }
-
-                UpdateInput(id);
             }
+
+            UpdateInput(id);
             Chapters = _chapterManager.GetChapterTable(id) ?? new List<ChapterTableModel>();
             return Page();
         }

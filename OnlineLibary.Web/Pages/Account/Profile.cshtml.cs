@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Managers.Managers;
+using OnlineLibary.Managers.Models;
 using OnlineLibary.Managers.Models.Identity;
 using OnlineLibary.Web.Helpers;
 
@@ -19,11 +20,14 @@ namespace OnlineLibary.Web.Pages.Account
 
         [BindProperty]
         public ProfileEditModel Input { get; set; }
+        public ResponseResult ResponseResult { get; set; } 
+        public bool WriteStatusMessage { get; set; }
         public bool IsCurrentUser { get; set; }
 
         public IActionResult OnGet(int? id)
         {
             UpdateInput(id ?? _userManager.GetCurrentUserId());
+            WriteStatusMessage = false;
             return Page();
         }
 
@@ -40,18 +44,16 @@ namespace OnlineLibary.Web.Pages.Account
             {
                 var result = await _userManager.UpdateUserProfileAsync(Input);
                 id = result.UpdatedId;
-                if (result.Errors.Any())
+                WriteStatusMessage = true;
+                ResponseResult = result;
+                if (result.IsSuccess)
                 {
-                    foreach (var (key, error) in result.Errors)
-                    {
-                        ModelState.AddModelError(key, error);
-                    }
+                    ResponseResult.SuccessText = $"User [{id}] profile successfully updated!";
                 }
             }
             UpdateInput(id);
             return Page();
-        }
-
+        } 
         private void UpdateInput(int id)
         {
             Input = _userManager.GetProfileEditModel(id);

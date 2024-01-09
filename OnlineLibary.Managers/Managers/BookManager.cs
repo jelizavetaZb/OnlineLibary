@@ -67,7 +67,11 @@ namespace OnlineLibary.Managers.Managers
 
         public async Task<ResponseResult> InsertOrUpdateBookAsync(BookEditInputModel model)
         {
-            var result = new ResponseResult();
+            var result = new ResponseResult()
+            {
+                UpdatedId = model.Id ?? 0
+            };
+
             if (model == null)
             {
                 result.AddError(string.Empty, "Form data are empty");
@@ -107,7 +111,6 @@ namespace OnlineLibary.Managers.Managers
 
             book.DateUpdated = DateTime.Now;
             _bookRepository.Update(book);
-            result.UpdatedId = book.Id;
             result.IsSuccess = true;
             return result;
         }
