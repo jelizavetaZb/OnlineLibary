@@ -51,7 +51,9 @@
     </div>
     <div class="form-floating my-3">
         <div class="mb-3">
-            <span asp-validation-for="Input.Description" class="text-danger"></span>
+            <div>
+                <span asp-validation-for="Input.Description" class="text-danger"></span>
+            </div>
             <label class="mb-2" asp-for="Input.Description"></label>
             <textarea asp-for="Input.Description" class="form-control" type="text" rows="10"></textarea>
         </div>

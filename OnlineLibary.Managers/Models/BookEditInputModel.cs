@@ -16,7 +16,7 @@ namespace OnlineLibary.Managers.Models
         public string Description { get; set; }
 
         [Required]
-        [YearRange(1000, ErrorMessage = "The {0} must be at least {2} and at max {1}.")]
+        [YearRange(1000, ErrorMessage = "The {0} must be at least {1} and at max {2}.")]
         public int Year { get; set; }
         public string CoverUrl { get; set; }
 
