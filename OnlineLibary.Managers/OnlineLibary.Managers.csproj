@@ -11,10 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.25" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\OnlineLibary.Domain\OnlineLibary.Domain.csproj" />
-    <ProjectReference Include="..\OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\OnlineLibary.Domain\OnlineLibary.Domain.csproj" />
+		<ProjectReference Include="..\OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj" />
+	</ItemGroup>
 </Project>

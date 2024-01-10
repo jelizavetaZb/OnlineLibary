@@ -22,10 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineLibary.Domain\OnlineLibary.Domain.csproj" />
-    <ProjectReference Include="..\OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj" />
-    <ProjectReference Include="..\OnlineLibary.IoC\OnlineLibary.IoC.csproj" />
     <ProjectReference Include="..\OnlineLibary.Managers\OnlineLibary.Managers.csproj" />
+	  <ProjectReference Include="..\OnlineLibary.Domain\OnlineLibary.Domain.csproj" />
+	  <ProjectReference Include="..\OnlineLibary.Infrastucture\OnlineLibary.Infrastructure.csproj" />
+	  <ProjectReference Include="..\OnlineLibary.IoC\OnlineLibary.IoC.csproj" />
   </ItemGroup>
 
 </Project>
