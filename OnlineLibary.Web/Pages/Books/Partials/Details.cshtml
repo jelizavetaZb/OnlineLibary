@@ -37,7 +37,7 @@
     </div>
 </div>
 
-@if(User.HasAnyRole(UserRoleType.Reader))
+@if(User.HasAnyRole(UserRoleType.Reader, UserRoleType.Editor))
 {
     <div class="card">
         <ul class="list-group list-group-flush">
