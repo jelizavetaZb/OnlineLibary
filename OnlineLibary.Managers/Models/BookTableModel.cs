@@ -9,5 +9,6 @@
         public string CoverUrl { get; set; }
         public string Author { get; set; }
         public int ChapterCount { get; set; }
+        public DateTime DateUpdated { get; set; }
     }
 }
