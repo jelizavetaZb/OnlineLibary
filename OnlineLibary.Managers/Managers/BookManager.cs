@@ -34,8 +34,8 @@ namespace OnlineLibary.Managers.Managers
                 var userBooks = _userBookRepository.GetAll().Where(x => x.UserId == userId).Select(x => x.BookId).AsEnumerable();
                 query = query.Where(x => userBooks.Contains(x.Id));
             }
-            query.OrderByDescending(x => x.DateUpdated);
-            return query.ProjectTo<BookTableModel>(MapperConfig).ToList();
+            var models = query.ProjectTo<BookTableModel>(MapperConfig);
+            return models.OrderByDescending(x => x.DateUpdated).ToList();
         }
 
         public void DeleteBook(int id)

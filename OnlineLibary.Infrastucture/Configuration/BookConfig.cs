@@ -10,6 +10,7 @@ namespace OnlineLibary.Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Book> builder)
         {
             builder.Property(e => e.DateCreated).DatabaseGenerated();
+            builder.Property(e => e.DateUpdated).DatabaseGenerated();
         }
     }
 }

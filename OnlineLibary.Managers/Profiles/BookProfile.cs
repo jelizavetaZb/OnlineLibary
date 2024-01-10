@@ -9,7 +9,8 @@ namespace OnlineLibary.Managers.Profiles
         public BookProfile()
         {
             CreateMap<Book, BookTableModel>()
-                .ForMember(dest => dest.ChapterCount, opt => opt.MapFrom(scr => scr.Chapters == null ? 0 : scr.Chapters.Count()));
+                .ForMember(dest => dest.ChapterCount, opt => opt.MapFrom(scr => scr.Chapters == null ? 0 : scr.Chapters.Count()))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(scr => scr.DateUpdated == null ? DateTime.MinValue : scr.DateUpdated));
             CreateMap<Book, BookEditInputModel>();
             CreateMap<Chapter, ChapterTableModel>();
             CreateMap<Chapter, ChapterEditInputModel>();
