@@ -1,6 +1,7 @@
 ﻿@page
 @using OnlineLibary.Domain.Enums
 @using OnlineLibary.Web.Helpers
+@using OnlineLibary.Web.Pages.Models
 @model OnlineLibary.Web.Pages.Books.Partials.EditDetailsModel
 @{
     var isEditor = User.HasAnyRole(UserRoleType.Editor);
@@ -8,7 +9,7 @@
 }
 @if (Model.WriteStatusMessage)
 {
-    <partial name="@PagesList.Shared_StatusMessage" model="Model.ResponseResult"></partial>
+    <partial name="@PagesList.Shared_StatusMessage" model="Model.ResponseResult" />
 }
 
 <form method="post" id="edit-book" enctype="multipart/form-data">
@@ -60,17 +61,4 @@
     </div>
 </form>
 
-<div class="card">
-    <ul class="list-group list-group-flush">
-        @foreach (var item in Model.Chapters)
-        {
-            <li class="list-group-item">
-                <div>
-                    <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Input.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-
-
+<partial name="@PagesList.Books_ChapterList" model="new ChapterListModel(Model.Input.Id, Model.Chapters)" />

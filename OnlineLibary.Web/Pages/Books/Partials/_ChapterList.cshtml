@@ -1,0 +1,27 @@
+﻿@using OnlineLibary.Domain.Enums
+@using OnlineLibary.Web.Helpers
+@using OnlineLibary.Web.Pages.Models
+@model ChapterListModel
+@{
+    var isEditor = User.HasAnyRole(UserRoleType.Editor);
+}
+
+@if (User.HasAnyRole(UserRoleType.Reader, UserRoleType.Editor) && Model.BookId.HasValue && Model.Chapters.Any())
+{
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Chapters)
+            {
+                <li class="list-group-item">
+                    <div>
+                        <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.BookId, id = item.Id})" class="stretched-link text-decoration-none">
+                            Chapter @item.Number @(string.IsNullOrEmpty(item.Title) ? "" : $": {item.Title}")
+                        </a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+

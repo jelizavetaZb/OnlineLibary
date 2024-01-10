@@ -1,0 +1,13 @@
+﻿@using OnlineLibary.Web.Pages.Models
+@model ChapterNavigationModel
+
+<div class="d-flex justify-content-evenly">
+    @if (Model.PreviousId.HasValue)
+    {
+        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.BookId, id = Model.PreviousId})" class="btn btn-outline-dark"> @("< ") Previous</a>
+    }
+    @if (Model.NextId.HasValue)
+    {
+        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.BookId, id = Model.NextId})" class="btn btn-outline-dark">Next @(" >")</a>
+    }
+</div>

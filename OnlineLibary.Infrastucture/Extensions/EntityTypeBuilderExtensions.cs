@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Humanizer;
+﻿using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

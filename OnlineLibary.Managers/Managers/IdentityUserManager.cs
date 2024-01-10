@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OnlineLibary.Domain.Entities.UserEntities;
-using OnlineLibary.Domain.Enums;
-using OnlineLibary.Infrastructure.Extensions;
-using System.Security.Claims;
 
 namespace OnlineLibary.Managers.Managers
 {

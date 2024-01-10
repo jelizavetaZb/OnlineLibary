@@ -9,7 +9,7 @@
 <div class="container my-3">
     @if (Model.WriteStatusMessage)
     {
-        <partial name="@PagesList.Shared_StatusMessage" model="Model.ResponseResult"></partial>
+        <partial name="@PagesList.Shared_StatusMessage" model="Model.ResponseResult" />
     }
     @{
         if (User.HasAnyRole(UserRoleType.UserManager) || Model.IsCurrentUser)

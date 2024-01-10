@@ -1,6 +1,7 @@
 ﻿@page
 @using OnlineLibary.Domain.Enums
 @using OnlineLibary.Web.Helpers
+@using OnlineLibary.Web.Pages.Models
 @model OnlineLibary.Web.Pages.Books.Partials.EditBookModel
 @{
     var isEditor = User.HasAnyRole(UserRoleType.Editor);
@@ -37,20 +38,4 @@
     </div>
 </div>
 
-@if(User.HasAnyRole(UserRoleType.Reader, UserRoleType.Editor))
-{
-    <div class="card">
-        <ul class="list-group list-group-flush">
-            @foreach (var item in Model.Chapters)
-            {
-                <li class="list-group-item">
-                    <div>
-                        <a href="@Url.Page(PagesList.BooksChapter, new {bookId = Model.Display.Id, id = item.Id})" class="stretched-link text-decoration-none">Chapter @item.Number: @item.Title</a>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
-}
-
-
+<partial name="@PagesList.Books_ChapterList" model="new ChapterListModel(Model.Display.Id, Model.Chapters)" />

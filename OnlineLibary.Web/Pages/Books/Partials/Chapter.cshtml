@@ -1,7 +1,7 @@
 ﻿@page
 @using OnlineLibary.Domain.Enums
-@using OnlineLibary.Managers.Enums
 @using OnlineLibary.Web.Helpers
+@using OnlineLibary.Web.Pages.Models
 @model OnlineLibary.Web.Pages.Books.Partials.ChapterModel
 @{
     var isEditor = User.HasAnyRole(UserRoleType.Editor);
@@ -27,14 +27,4 @@
     @Html.Raw(Model.Display.Content)
 </div>
 
-
-<div class="d-flex justify-content-evenly">
-    @if (Model.Display.PreviousId.HasValue)
-    {
-        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Display.BookId, id = Model.Display.PreviousId})" class="btn btn-outline-dark"> @("< ") Previous</a>
-    }
-    @if (Model.Display.NextId.HasValue)
-    {
-        <a href="@Url.Page(PagesList.BooksChapter, new { bookId = Model.Display.BookId, id = Model.Display.NextId})" class="btn btn-outline-dark">Next @(" >")</a>
-    }
-</div>
+<partial name="@PagesList.Books_ChapterNavigation" model="new ChapterNavigationModel(Model.Display.BookId, Model.Display.PreviousId, Model.Display.NextId)" />

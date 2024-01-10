@@ -1,12 +1,13 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineLibary.Domain.Enums;
 using OnlineLibary.Managers.Managers;
 using OnlineLibary.Managers.Models;
+using OnlineLibary.Web.Helpers;
 
 namespace OnlineLibary.Web.Pages.Books.Partials
 {
-    [Authorize]
+    [CustomAuthorize(UserRoleType.Editor, UserRoleType.Reader)]
     public class ChapterModel : PageModel
     {
         private readonly ChapterManager _chapterManager;

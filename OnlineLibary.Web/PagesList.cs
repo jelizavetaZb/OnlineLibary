@@ -13,6 +13,8 @@
         public const string BooksEditDetails = @"/Books/Partials/EditDetails";
         public const string BooksChapter = @"/Books/Partials/Chapter";
         public const string BooksEditChapter = @"/Books/Partials/EditChapter";
+        public const string Books_ChapterNavigation = @"Books/Partials/_ChapterNavigation";
+        public const string Books_ChapterList = @"Books/Partials/_ChapterList";
         public const string Error = @"/Error";
         public const string Index = @"/Index";
         public const string Privacy = @"/Privacy";

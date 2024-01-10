@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using OnlineLibary.Domain.Entities.BookEntities;
 using OnlineLibary.Domain.Entities.UserEntities;
 using OnlineLibary.Domain.Enums;
 using OnlineLibary.Infrastructure.Repositories;
@@ -16,7 +15,7 @@ using System.Security.Claims;
 
 namespace OnlineLibary.Managers.Managers
 {
-    public class UserCustomManager
+    public class UserCustomManager : BaseManager
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IdentityUserManager _userManager;
@@ -28,12 +27,10 @@ namespace OnlineLibary.Managers.Managers
         private readonly UserUserRolesRepository _userUserRolesRepository;
         protected string _ipAddress;
         protected ClaimsPrincipal _user;
-        protected IMapper _mapper;
-        protected AutoMapper.IConfigurationProvider _mapperConfig;
 
         public UserCustomManager(SignInManager<User> signInManager, IdentityUserManager userManager, ILogger<UserCustomManager> logger,
             IHttpContextAccessor contextAccessor, UserRepository userRepository, IMapper mapper, IConfiguration configuration,
-            FileHelper fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository)
+            FileHelper fileManager, RolesRepository rolesRepository, UserUserRolesRepository userUserRolesRepository) : base(mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -43,10 +40,8 @@ namespace OnlineLibary.Managers.Managers
             _fileManager = fileManager;
             _rolesRepository = rolesRepository;
             _userUserRolesRepository = userUserRolesRepository;
-            _mapper = mapper;
             _ipAddress = contextAccessor.HttpContext!.Connection.RemoteIpAddress!.ToString();
             _user = contextAccessor.HttpContext!.User;
-            _mapperConfig = mapper.ConfigurationProvider;
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterInputModel model)
@@ -93,13 +88,13 @@ namespace OnlineLibary.Managers.Managers
         public ProfileEditModel GetProfileEditModel(int? id)
         {
             var user = id != null ? _userRepository.GetById(id.Value) : GetCurrentUser();
-            return _mapper.Map<ProfileEditModel>(user);
+            return Mapper.Map<ProfileEditModel>(user);
         }
 
         public UserRoleEditModel GetUserRoleEditModel(int? id)
         {
             var user = id != null ? _userRepository.GetById(id.Value) : GetCurrentUser();
-            return _mapper.Map<UserRoleEditModel>(user);
+            return Mapper.Map<UserRoleEditModel>(user);
         }
 
         public async Task<ResponseResult> UpdateUserProfileAsync(ProfileEditModel model)
@@ -172,21 +167,6 @@ namespace OnlineLibary.Managers.Managers
                 }
                 _userUserRolesRepository.AddRange(userRoles);
             }
-            //var selectedRoles = model.Roles
-            //    .Where(x => x.IsSelected)
-            //    .Select(x => x.Id);
-            //var roles = _userRepository
-            //    .GetById(user.Id).UserRoles
-            //    .Select(x => x.Role)
-            //    .Where(x => selectedRoles.Contains(x.Id)).ToList();
-            //if (roles.Any())
-            //{
-            //    var userRoles = new List<UserUserRole>();
-            //    foreach (var role in roles)
-            //    {
-            //        await _userManager.AddToRoleAsync(user, role.UserRoleType.ToString());
-            //    }
-            //}
 
 
             result.IsSuccess = true;
@@ -196,7 +176,7 @@ namespace OnlineLibary.Managers.Managers
         public List<UserTableModel> GetUsersTable()
         {
             var users = _userRepository.GetAll();
-            return users.ProjectTo<UserTableModel>(_mapperConfig).ToList();
+            return users.ProjectTo<UserTableModel>(MapperConfig).ToList();
         }
 
         public int GetCurrentUserId()
@@ -207,13 +187,13 @@ namespace OnlineLibary.Managers.Managers
         public IEnumerable<UserRoleModel> GetUserRoles(int userId)
         {
             var query = _userRepository.GetById(userId).UserRoles.Select(x => x.Role).AsQueryable();
-            return query.ProjectTo<UserRoleModel>(_mapperConfig);
+            return query.ProjectTo<UserRoleModel>(MapperConfig);
         }
 
         public IQueryable<UserRoleModel> GetAllRoles()
         {
             var roles = _rolesRepository.GetAll();
-            return roles.ProjectTo<UserRoleModel>(_mapperConfig);
+            return roles.ProjectTo<UserRoleModel>(MapperConfig);
         }
 
         private User GetCurrentUser()
